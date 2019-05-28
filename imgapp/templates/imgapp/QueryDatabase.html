@@ -1,0 +1,7 @@
+<h1>Query Images</h1>
+<form method="post" action="../results/" enctype="multipart/form-data"> {% csrf_token %}
+    
+    Query Key : <input type="text" name="queryfield"><br><br>
+    Query Val : <input type="text" name="queryvalue"><br><br>
+    <input type="submit" value="Search Images"/>
+</form>
