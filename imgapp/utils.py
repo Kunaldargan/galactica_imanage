@@ -17,7 +17,10 @@ class Utils  :
 
     def save_annotatedFile(self,imgIds,cat_names) :
         catIds = self.coco.getCatIds(catNms=cat_names)
+        imagesLoaded = 0
         for img in imgIds.keys() :
+            if (imagesLoaded==100) : 
+                break
             I = io.imread(imgIds[img])
             plt.imshow(I); plt.axis('off')
             annIds = self.coco.getAnnIds(imgIds=img, catIds=catIds, iscrowd=None)
@@ -25,4 +28,6 @@ class Utils  :
             self.coco.showAnns(anns)
             plt.savefig("imgapp/static/imgapp/"+str(img)+".png",bbox_inches = 'tight',pad_inches=0.0)
             plt.close()
+            imagesLoaded+=1
+    
 
