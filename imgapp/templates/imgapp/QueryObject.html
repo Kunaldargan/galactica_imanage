@@ -1,6 +1,10 @@
-<h1>Find Object in Images</h1>
+{% extends 'imgapp/base.html'%}
+{% block content %}
+<h2>Search Objects in Images</h2>
 <form method="post" action="../objectqueryresults/" enctype="multipart/form-data"> {% csrf_token %}
     
-    Object : <input type="text" name="queryvalue"><br><br>
-    <input type="submit" value="Search Images"/>
+    Objects : <input type="text" name="queryvalue"><br><br>
+    <button type="submit" >Search Images</button>
 </form>
+{% endblock %}
+

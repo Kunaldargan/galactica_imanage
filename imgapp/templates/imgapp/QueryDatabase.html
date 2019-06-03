@@ -1,7 +1,10 @@
-<h1>Query Images</h1>
+{% extends 'imgapp/base.html'%}
+{% block content %}
+<h2>Query Images</h2>
 <form method="post" action="../results/" enctype="multipart/form-data"> {% csrf_token %}
     
-    Query Key : <input type="text" name="queryfield"><br><br>
-    Query Val : <input type="text" name="queryvalue"><br><br>
-    <input type="submit" value="Search Images"/>
+    Query Keys   : <input type="text" name="queryfield"><br><br>
+    Query Values : <input type="text" name="queryvalue"><br><br>
+    <button type="submit" >Search Images</button>
 </form>
+{% endblock %}
