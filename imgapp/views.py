@@ -16,12 +16,18 @@ DATAPATH = os.path.join(BASE_DIR,'data')
 STATICPATH = BASE_DIR+'/imgapp/static'
 
 def Home(request) :
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('loginform'))
     return render(request,"imgapp/home.html", {})
 
 def Form(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('loginform'))
     return render(request, "imgapp/upload.html", {})
 
 def Upload(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('loginform'))
     file_list = request.FILES.getlist("files")
     dataset = request.POST['dataset']
     imagetype = request.POST['imagetype']
@@ -44,12 +50,18 @@ def Upload(request):
     return HttpResponseRedirect(reverse('updated'))
 
 def UpdatedMongo(request) :
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('loginform'))
     return render(request, "imgapp/DatabaseUpdated.html", {})
     
 def QueryMongo(request) :
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('loginform'))
     return render(request, "imgapp/QueryDatabase.html", {})
 
 def QueryResults(request) :
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('loginform'))
     QueryMongo = MongoQuery()
     queryfield = request.POST['queryfield']
     queryval = request.POST['queryvalue']
@@ -68,6 +80,8 @@ def QueryResults(request) :
     return Showresults_keyValue(imagenames,result)
 
 def QueryObject(request) :
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('loginform'))
     return render(request,"imgapp/QueryObject.html")
 
 def RemoveSpaces(object) :
@@ -78,6 +92,8 @@ def RemoveSpaces(object) :
     return newObj
 
 def QueryObjectResult(request) :
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('loginform'))
     queryval = request.POST['queryvalue']
     objects = []
     queryval = queryval.split(',')
@@ -96,7 +112,7 @@ def QueryObjectResult(request) :
 # show results for Object queries,modifies the template to show the images required
 def Showresults_Objects(result) :
     navigationsBarStyle = "<style>ul{list-style-type: none;margin: 0;padding: 0;overflow: hidden;background-color:grey;}li{float: left;}li a{display: block;color: white;text-align: center;padding: 16px;text-decoration: none;}li a:hover {background-color:  black;}</style>"
-    bootstrap = "<!DOCTYPE html><html lang=\"en\"><head><title>Bootstrap Example</title><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css\"><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js\"></script><script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js\"></script>"+navigationsBarStyle+"</head>"
+    bootstrap = "<!DOCTYPE html><html lang=\"en\"><head><title>iManage App</title><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css\"><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js\"></script><script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js\"></script>"+navigationsBarStyle+"</head>"
     navigationsBar = "<ul><li><a href=\"../home/\">Home</a></li><li><a href=\"../form/\">Upload Images</a></li><li><a href=\"../query/\">Query Images</a></li><li><a href=\"../objectquery/\">Object Query</a></li><li><a href=\"https://www.galactica.ai/\">About</a></li></ul>"
     response = bootstrap+"<body> "+navigationsBar+" <div class=\"container\"><h2>Image Results</h2><div class=\"row\">{% load static %}"
     filenames = os.listdir(result)
@@ -113,7 +129,7 @@ def Showresults_Objects(result) :
 # show results for key value queries,modifies the template to show the images required
 def Showresults_keyValue(paths,destPath) :
     navigationsBarStyle = "<style>ul{list-style-type: none;margin: 0;padding: 0;overflow: hidden;background-color:grey;}li{float: left;}li a{display: block;color: white;text-align: center;padding: 16px;text-decoration: none;}li a:hover {background-color:  black;}</style>"
-    bootstrap = "<!DOCTYPE html><html lang=\"en\"><head><title>Bootstrap Example</title><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css\"><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js\"></script><script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js\"></script>"+navigationsBarStyle+"</head>"
+    bootstrap = "<!DOCTYPE html><html lang=\"en\"><head><title>iManage App</title><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css\"><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js\"></script><script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js\"></script>"+navigationsBarStyle+"</head>"
     navigationsBar = "<ul><li><a href=\"../home/\">Home</a></li><li><a href=\"../form/\">Upload Images</a></li><li><a href=\"../query/\">Query Images</a></li><li><a href=\"../objectquery/\">Object Query</a></li><li><a href=\"https://www.galactica.ai/\">About</a></li></ul>"
     response = bootstrap+"<body> "+navigationsBar+" <div class=\"container\"><h2>Image Results</h2><div class=\"row\">{% load static %}"
     for path in paths :
