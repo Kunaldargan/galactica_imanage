@@ -73,6 +73,8 @@ def QueryResults(request) :
         query_val_list[i] = ast.literal_eval(query_val_list[i])
         query_dict.update({query_field_list[i] : query_val_list[i]})
     imagenames = QueryMongo.Find_Key_Val(query_dict)
+    if (len(imagenames)==0) :
+        return render_to_response('imgapp/NoImagesFound.html')
     result = os.path.join(STATICPATH,'imgapp') 
     if os.path.exists(result) :
         shutil.rmtree(result)    
@@ -102,6 +104,8 @@ def QueryObjectResult(request) :
         objects.append(obj)
     QueryMongo = MongoQuery()
     imageids = QueryMongo.FindObjects(objects)
+    if (len(imageids)==0) :
+        return render_to_response('imgapp/NoImagesFound.html')
     result = os.path.join(STATICPATH,'imgapp') 
     if os.path.exists(result) :
         shutil.rmtree(result)    
@@ -111,16 +115,14 @@ def QueryObjectResult(request) :
 
 # show results for Object queries,modifies the template to show the images required
 def Showresults_Objects(result) :
-    navigationsBarStyle = "<style>ul{list-style-type: none;margin: 0;padding: 0;overflow: hidden;background-color:grey;}li{float: left;}li a{display: block;color: white;text-align: center;padding: 16px;text-decoration: none;}li a:hover {background-color:  black;}</style>"
-    bootstrap = "<!DOCTYPE html><html lang=\"en\"><head><title>iManage App</title><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css\"><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js\"></script><script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js\"></script>"+navigationsBarStyle+"</head>"
-    navigationsBar = "<ul><li><a href=\"../home/\">Home</a></li><li><a href=\"../form/\">Upload Images</a></li><li><a href=\"../query/\">Query Images</a></li><li><a href=\"../objectquery/\">Object Query</a></li><li><a href=\"https://www.galactica.ai/\">About</a></li></ul>"
-    response = bootstrap+"<body> "+navigationsBar+" <div class=\"container\"><h2>Image Results</h2><div class=\"row\">{% load static %}"
+    base = "{% extends 'imgapp/base.html' %}"
+    response = base+"{% block content %}<h1>Image Results</h1><hr><div class=\"row\">{% load static %}"
     filenames = os.listdir(result)
     for file in filenames :
         path = os.path.join('imgapp',file)
         showimage = "<div class=\"col-md-4\"><div class=\"thumbnail\"><img src=\" {% static \""+path+"\" %}\" alt = "+file+" style=\"width:100%\"><div class=\"caption\"><p>"+file+"</p></div></div></div>"
         response = response +showimage
-    response = response + "</div></div></body>"
+    response = response + "</div>{% endblock %}"
     file = open("imgapp/templates/imgapp/Showresults_Objects.html",'w')
     file.write(response)
     file.close()
@@ -128,17 +130,15 @@ def Showresults_Objects(result) :
 
 # show results for key value queries,modifies the template to show the images required
 def Showresults_keyValue(paths,destPath) :
-    navigationsBarStyle = "<style>ul{list-style-type: none;margin: 0;padding: 0;overflow: hidden;background-color:grey;}li{float: left;}li a{display: block;color: white;text-align: center;padding: 16px;text-decoration: none;}li a:hover {background-color:  black;}</style>"
-    bootstrap = "<!DOCTYPE html><html lang=\"en\"><head><title>iManage App</title><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css\"><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js\"></script><script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js\"></script>"+navigationsBarStyle+"</head>"
-    navigationsBar = "<ul><li><a href=\"../home/\">Home</a></li><li><a href=\"../form/\">Upload Images</a></li><li><a href=\"../query/\">Query Images</a></li><li><a href=\"../objectquery/\">Object Query</a></li><li><a href=\"https://www.galactica.ai/\">About</a></li></ul>"
-    response = bootstrap+"<body> "+navigationsBar+" <div class=\"container\"><h2>Image Results</h2><div class=\"row\">{% load static %}"
+    base = "{% extends 'imgapp/base.html' %}"
+    response = base+"{% block content %}<h1>Image Results</h1><hr><div class=\"row\">{% load static %}"
     for path in paths :
         path = shutil.copy(path,destPath)
         filename = path[path.rfind('/')+1:]
         newpath = os.path.join('imgapp',filename)
         showimage = "<div class=\"col-md-4\"><div class=\"thumbnail\"><img src=\" {% static \""+newpath+"\" %}\" alt = "+filename+" style=\"width:100%\"><div class=\"caption\"><p>"+filename+"</p></div></div></div>"
         response = response +showimage
-    response = response + "</div></div></body>"
+    response = response + "</div>{% endblock %}"
     file = open("imgapp/templates/imgapp/Showresults_KeyVal.html",'w')
     file.write(response)
     file.close()

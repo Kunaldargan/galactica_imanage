@@ -20,7 +20,7 @@ class MongoQuery :
         for key,value in Config.items() :
             if queryfield in value:
                 return(key)
-        return 0    
+        return -1    
 
     # find objects in coco images
     def FindObjects(self,QueryValue) :
@@ -29,6 +29,8 @@ class MongoQuery :
         queryDict = {}
         for obj in QueryValue :
             key = self.find_key(obj,Categories_Dict)
+            if (key==-1) :
+                return {}
             query = 'item.Objects.'+key+'.'+obj 
             queryDict.update({query : {"$exists" : True }})
         cursor = self.Col.find(queryDict)
@@ -58,6 +60,8 @@ class MongoQuery :
         queries = {}
         for queryfield in query_dict.keys() :
             key = self.find_key(queryfield,Config)
+            if (key == -1) :
+                return []
             query = 'item.'+key+'.'+queryfield
             queries.update({ query : query_dict[queryfield]})
         cursor = self.Col.find(queries)
