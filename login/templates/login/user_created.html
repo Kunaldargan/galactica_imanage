@@ -1,0 +1,9 @@
+{% extends 'login/Base.html' %}
+{% block content %}
+<form action="../loginform/"  method="POST">{% csrf_token %}
+    <div class="container">
+        <h1>User Created!</h1>
+        <button type="submit">Login</button>
+    </div>
+</form>
+{% endblock %}
