@@ -28,10 +28,13 @@ MONGO_COLLECTION = settings['mongodb']['collection']
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'c8e@2sh=6bsg5y#tvz3p4*trbxsv&^#e(yjuw0b15ju%7-m!zr'
+#SECRET_KEY = 'c8e@2sh=6bsg5y#tvz3p4*trbxsv&^#e(yjuw0b15ju%7-m!zr'
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'c8e@2sh=6bsg5y#tvz3p4*trbxsv&^#e(yjuw0b15ju%7-m!zr')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+#DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = []
 

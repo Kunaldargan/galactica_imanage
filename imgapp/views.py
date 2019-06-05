@@ -10,10 +10,12 @@ import shutil
 import ast
 from ImageManagementSystem.settings import BASE_DIR
 
-
 Utils_Object = Utils()
 DATAPATH = os.path.join(BASE_DIR,'data')
 STATICPATH = BASE_DIR+'/imgapp/static'
+
+if not os.path.exists(STATICPATH):
+	os.mkdir(STATICPATH)
 
 def Home(request) :
     if not request.user.is_authenticated:
