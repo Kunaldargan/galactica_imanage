@@ -16,7 +16,7 @@ import json
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# MONGO DATABASE SETTINGS 
+# MONGO DATABASE SETTINGS
 # Uses the App_Settings.json file to switch between mongodb databases
 with open('App_Settings.json') as f :
     settings = json.load(f)
@@ -27,13 +27,14 @@ MONGO_COLLECTION = settings['mongodb']['collection']
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'c8e@2sh=6bsg5y#tvz3p4*trbxsv&^#e(yjuw0b15ju%7-m!zr'
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','c8e@2sh=6bsg5y#tvz3p4*trbxsv&^#e(yjuw0b15ju%7-m!zr')
+# SECURITY WARNING: keep the secret key used in production secret!
+#SECRET_KEY = 'c8e@2sh=6bsg5y#tvz3p4*trbxsv&^#e(yjuw0b15ju%7-m!zr'
 
-# # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'c8e@2sh=6bsg5y#tvz3p4*trbxsv&^#e(yjuw0b15ju%7-m!zr')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+#DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['192.168.0.114','localhost', '127.0.0.1','0.0.0.0']
 

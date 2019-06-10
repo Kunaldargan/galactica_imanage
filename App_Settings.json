@@ -3,5 +3,15 @@
 		"connection_url": "mongodb://127.0.0.1:27017",
 		"database": "database",
 		"collection": "Col"
+	},
+	"darknet": {
+		"weights":"/home/galactica/Galactica/Datasets/Weights/aiskyeye_challenge/yolov3_openImages_50000.weights",
+		"cfg" : "/home/galactica/Galactica/Datasets/Weights/aiskyeye_challenge/yolov3_openImages.cfg",
+		"names" : "/home/galactica/Galactica/Datasets/Weights/aiskyeye_challenge/names.txt",
+		"obj" : "/home/galactica/Galactica/Datasets/Weights/aiskyeye_challenge/obj.data",
+		"threshold" : 0.2
+	},
+	"coco" : {
+		"ann_file" : "/home/galactica/Galactica/Production/galactica_imanage/imgapp/instances_val2017.json"
 	}
 }

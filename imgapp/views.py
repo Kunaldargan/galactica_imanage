@@ -10,10 +10,12 @@ import shutil
 import ast
 from ImageManagementSystem.settings import BASE_DIR
 
-
 Utils_Object = Utils()
 DATAPATH = os.path.join(BASE_DIR,'data')
 STATICPATH = BASE_DIR+'/imgapp/static'
+
+if not os.path.exists(STATICPATH):
+	os.mkdir(STATICPATH)
 
 def Home(request) :
     if not request.user.is_authenticated:
@@ -46,14 +48,14 @@ def Upload(request):
                     destination.write(chunk)
         process(x)
 
-    update_Mongo(dataset,imagetype,path_imagetype)
+    update_Mongo(dataset,imagetype,path_imagetype, Utils_Object)
     return HttpResponseRedirect(reverse('updated'))
 
 def UpdatedMongo(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loginform'))
     return render(request, "imgapp/DatabaseUpdated.html", {})
-    
+
 def QueryMongo(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loginform'))
@@ -75,9 +77,9 @@ def QueryResults(request) :
     imagenames = QueryMongo.Find_Key_Val(query_dict)
     if (len(imagenames)==0) :
         return render_to_response('imgapp/NoImagesFound.html')
-    result = os.path.join(STATICPATH,'imgapp') 
+    result = os.path.join(STATICPATH,'imgapp')
     if os.path.exists(result) :
-        shutil.rmtree(result)    
+        shutil.rmtree(result)
     os.mkdir(result)
     return Showresults_keyValue(imagenames,result)
 
@@ -100,16 +102,17 @@ def QueryObjectResult(request) :
     objects = []
     queryval = queryval.split(',')
     for object in queryval :
-        obj = RemoveSpaces(object) 
+        obj = RemoveSpaces(object)
         objects.append(obj)
     QueryMongo = MongoQuery()
+    result = os.path.join(STATICPATH,'imgapp')
+    if os.path.exists(result) :
+        shutil.rmtree(result)
+    os.mkdir(result)
     imageids = QueryMongo.FindObjects(objects)
     if (len(imageids)==0) :
         return render_to_response('imgapp/NoImagesFound.html')
-    result = os.path.join(STATICPATH,'imgapp') 
-    if os.path.exists(result) :
-        shutil.rmtree(result)    
-    os.mkdir(result)
+
     Utils_Object.save_annotatedFile(imageids,objects)
     return Showresults_Objects(result)
 

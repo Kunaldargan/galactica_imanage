@@ -6,3 +6,4 @@ imgapp/static/imgapp/
 *.JPG
 *.JPEG
 *.PNG
+*.pyc
