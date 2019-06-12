@@ -3,42 +3,59 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 import datetime
 import os
-from .UpdateMongoDB import update_Mongo
 from .MongoQuery import MongoQuery
 from .utils import Utils
 import shutil
 import ast
 from ImageManagementSystem.settings import BASE_DIR
+from .uploadThreadClass import UpdateMongo_Thread
 
+# create media directories
+if not os.path.exists('data') :
+    os.mkdir('data')
+if not os.path.exists('imgapp/static') :
+    os.mkdir('imgapp/static')
+
+# Instantiate the Utils Object
 Utils_Object = Utils()
+# Image files saved here
 DATAPATH = os.path.join(BASE_DIR,'data')
+# static path
 STATICPATH = BASE_DIR+'/imgapp/static'
 
-if not os.path.exists(STATICPATH):
-	os.mkdir(STATICPATH)
 
+objectslist = ["person","bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat","traffic light", "fire hydrant", "stop sign", "parking meter", "bench","bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe","backpack", "umbrella", "handbag", "tie", "suitcase","frisbee", "skis", "snowboard", "sports ball", "kite", "baseball bat", "baseball glove", "skateboard", "surfboard", "tennis racket","bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl","banana", "apple", "sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza", "donut", "cake","chair", "couch", "potted plant", "bed", "dining table", "toilet","tv", "laptop", "mouse", "remote", "keyboard", "cell phone","microwave", "oven", "toaster", "sink", "refrigerator","book", "clock", "vase", "scissors", "teddy bear", "hair drier", "toothbrush"]
+
+
+
+# render home screen template
 def Home(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loginform'))
     return render(request,"imgapp/home.html", {})
 
+# render upload images form template
 def Form(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loginform'))
     return render(request, "imgapp/upload.html", {})
 
+# upload images process
 def Upload(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loginform'))
+    # save the image files in the data directory
     file_list = request.FILES.getlist("files")
     dataset = request.POST['dataset']
     imagetype = request.POST['imagetype']
     path_dataset = os.path.join(DATAPATH,dataset)
     path_imagetype = os.path.join(path_dataset,imagetype)
+    timestamp = str(datetime.datetime.now().strftime('%Y-%m-%d-%H:%M:%S'))
+    userID = request.user.pk
+    
     for count, x in enumerate(file_list):
         # print(type(x)) # class object of django image type
         def process(f):
-            timestamp = str(datetime.datetime.now().strftime('%Y-%m-%d-%H:%M:%S'))
             if not os.path.exists(path_dataset) :
                 os.mkdir(path_dataset)
             if not os.path.exists(path_imagetype) :
@@ -48,19 +65,33 @@ def Upload(request):
                     destination.write(chunk)
         process(x)
 
-    update_Mongo(dataset,imagetype,path_imagetype, Utils_Object)
+    # update mongo database in a separate thread,
+    # *add object detection in this thread,
+    update_thread = UpdateMongo_Thread(dataset,imagetype,path_imagetype,Utils_Object,timestamp,userID)
+    update_thread.start()
     return HttpResponseRedirect(reverse('updated'))
 
+# render database updated template after uploading the metadata on mongo
 def UpdatedMongo(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loginform'))
     return render(request, "imgapp/DatabaseUpdated.html", {})
 
+# Query key-value pairs template
 def QueryMongo(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loginform'))
     return render(request, "imgapp/QueryDatabase.html", {})
 
+# parse input for query key-value spaces
+def RemoveSpaces(object) :
+    newObj = ""
+    for i in object :
+        if (i!=" "):
+            newObj = newObj+i
+    return newObj
+
+# find images with query key-value pairs
 def QueryResults(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loginform'))
@@ -83,37 +114,35 @@ def QueryResults(request) :
     os.mkdir(result)
     return Showresults_keyValue(imagenames,result)
 
+# query for objects in images (template)
 def QueryObject(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loginform'))
-    return render(request,"imgapp/QueryObject.html")
 
-def RemoveSpaces(object) :
-    newObj = ""
-    for i in object :
-        if (i!=" "):
-            newObj = newObj+i
-    return newObj
+    context = {'objectslist' : objectslist}
+    return render(request,"imgapp/QueryObject.html",context)
 
+# find images with query objects
 def QueryObjectResult(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loginform'))
-    queryval = request.POST['queryvalue']
-    objects = []
-    queryval = queryval.split(',')
-    for object in queryval :
-        obj = RemoveSpaces(object)
-        objects.append(obj)
+    objects = request.POST.getlist('queryvalue')
+    if (len(objects)==0) :
+        return render_to_response('imgapp/NoImagesFound.html')
+    searchtype = request.POST['searchtype']
     QueryMongo = MongoQuery()
     result = os.path.join(STATICPATH,'imgapp')
     if os.path.exists(result) :
         shutil.rmtree(result)
     os.mkdir(result)
-    imageids = QueryMongo.FindObjects(objects)
+    imageids = {}
+    if (searchtype=="COCO") :
+        imageids = QueryMongo.FindObjectsCOCO(objects,Utils_Object)
+    else :
+        userID = request.user.pk
+        imageids = QueryMongo.custom_search(objects,userID,searchtype)
     if (len(imageids)==0) :
         return render_to_response('imgapp/NoImagesFound.html')
-
-    Utils_Object.save_annotatedFile(imageids,objects)
     return Showresults_Objects(result)
 
 # show results for Object queries,modifies the template to show the images required

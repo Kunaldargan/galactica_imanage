@@ -45,7 +45,12 @@ class MongoQuery :
 
             # find the latest timestamp for the latest upload by current user 
             prev_Timestamp_cursor = self.timestampsCOl.find({'userID' : userID}).sort('_id', pymongo.DESCENDING).limit(1)
-            prev_Timestamp = list(prev_Timestamp_cursor)[0]['time']
+            prev_Timestamp_list = list(prev_Timestamp_cursor) 
+            # incase no uploads yet, no timestamps in database till now
+            # precaution for index error
+            if (len(prev_Timestamp_list)==0) :
+                return {}
+            prev_Timestamp = prev_Timestamp_list[0]['time']
 
             # search for this timestamp
             queryDict.update( { 'item.File.TimeStamp' : prev_Timestamp } )
