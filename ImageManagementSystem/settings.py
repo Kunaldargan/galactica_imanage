@@ -28,8 +28,6 @@ MONGO_COLLECTION = settings['mongodb']['collection']
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'c8e@2sh=6bsg5y#tvz3p4*trbxsv&^#e(yjuw0b15ju%7-m!zr'
-
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'c8e@2sh=6bsg5y#tvz3p4*trbxsv&^#e(yjuw0b15ju%7-m!zr')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -40,7 +38,6 @@ ALLOWED_HOSTS = ['192.168.0.114','localhost', '127.0.0.1','0.0.0.0']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -131,7 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = '/imgapp/static'
 TEMPLATE_DIRS = (
    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
    # Always use forward slashes, even on Windows.

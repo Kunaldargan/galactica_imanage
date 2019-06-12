@@ -1,9 +1,13 @@
 {% extends 'imgapp/base.html'%}
 {% block content %}
 <h2>Upload Images</h2>
-<form method="post" action="../upload/" enctype="multipart/form-data"> {% csrf_token %}
-    Dataset Name : <input type="text" name="dataset" ><br><br>
-    Image Type : <input type="text" name="imagetype" ><br><br>
+<form method="post" action="{% url 'upload' %}" enctype="multipart/form-data"> {% csrf_token %}
+    <legend>Dataset Name:</legend>
+    <input type="text" name="dataset" ><br><br>
+    <legend>Select Search Type :</legend>
+    <input type="radio" name="imagetype" value="aerial" checked> Aerial<br>
+    <input type="radio" name="imagetype" value="general"> General<br>
+    <input type="radio" name="imagetype" value="satellite"> Satellite<br><br>
     <input type="file" name="files" multiple/><br><br>
     <input type="submit" value="Upload"/>
 </form>

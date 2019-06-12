@@ -3,6 +3,10 @@ from ExtractExif import Extract_Exif
 from pprint import pprint
 from pymongo import MongoClient
 
+## Directly upload metadata and segmentations to the mongoDB for the COCO dataset 
+## Important : before using this script to upload COCO data to mongoDB ;
+## Important : ExtractExif.py : change path of config.txt from 'imgapp/config.txt' to 'config.txt'
+
 def make_imgname(imgid) :
     l = len(imgid)
     n = 16 - l
@@ -70,7 +74,7 @@ with open('instances_val2017.json') as json_file :
     data = json.load(json_file)
     annotationsList = data["annotations"]
     category = data["categories"]
-
+    # print category dict for COCO
     # category_dict = {}
 
     # for cat in category:
@@ -81,28 +85,19 @@ with open('instances_val2017.json') as json_file :
     #         category_dict[key].append(cat['name'])
     # print(category_dict)
     imgdict = ListObjects(annotationsList,category)
-    # print("Extracting ...")
+    
     Ext_Exif = Extract_Exif()
     NewExtAll = []
     ExtALL = Ext_Exif.Extract_MetaData('/home/udayaan/DjangoplusMongo/Galactica/val2017')
-    # pprint(ExtALL)
-    # print("Extracted!")
-    # print("Adding Objects ...")
+    
     for imgname in imgdict.keys() :
         meta = ExtALL[imgname]
         meta.update( imgdict[imgname] )
         dict = { "item" : meta }
         NewExtAll.append(dict)
-    # pprint(NewExtAll)
-    # print("Objects Added!")
+    
     client = MongoClient("mongodb://127.0.0.1:27017")
     db = client.database
     Col = db.Col
-    # ImagetypeName = 'RBG'
-    # DatasetName  = 'Coco'
-    # Imagetype = { ImagetypeName : NewExtAll}
-    # Dataset = {DatasetName:Imagetype}
-    # print("Inserting dataset ...")
-    # Col.insert_one(Dataset)
+    
     Col.insert_many(NewExtAll)
-    # print("Done!")

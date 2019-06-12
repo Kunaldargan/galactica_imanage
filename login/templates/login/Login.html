@@ -1,7 +1,7 @@
 {% extends 'login/Base.html' %}
 {% load static %}
 {% block content %}
-<form action="../loginsubmit/" method="POST">{% csrf_token %}
+<form action="{% url 'loginsubmit' %}" method="POST">{% csrf_token %}
     <div class="imgcontainer">
       <img src="{%static "login/login.png" %}" alt="Avatar" class="avatar">
     </div>

@@ -1,11 +1,11 @@
-from pymongo import MongoClient
+import pymongo
 from pprint import pprint
 import json
 import ast
 import cv2
 from .utils import draw_bbox
-from ImageManagementSystem.settings import MONGO_CONNECTION_URL, MONGO_DATABASE, MONGO_COLLECTION
-
+from ImageManagementSystem.settings import MONGO_CONNECTION_URL, MONGO_DATABASE, MONGO_COLLECTION, BASE_DIR
+import os
 
 class MongoQuery :
     client = None
@@ -13,14 +13,15 @@ class MongoQuery :
     Col = None
 
     def __init__(self):
-        self.client = MongoClient(MONGO_CONNECTION_URL)
+        self.client = pymongo.MongoClient(MONGO_CONNECTION_URL)
         self.db = self.client[MONGO_DATABASE]
         self.Col = self.db[MONGO_COLLECTION]
-        with open('/home/galactica/Galactica/Production/galactica_imanage/App_Settings.json') as f :
+        self.timestampsCOl = self.db['timestamps']
+        with open(os.path.join(BASE_DIR,'App_Settings.json')) as f :
             self.settings = json.load(f)
         with open(self.settings["darknet"]["names"],'r') as c:
             self.classes = [x.rstrip() for x in c.readlines()]
-        print(self.classes)
+        # print(self.classes)
 
         return
 
@@ -30,40 +31,65 @@ class MongoQuery :
                 return(key)
         return -1
 
-    def check_aerial(self,QueryValue):
+    def custom_search(self,QueryValue,userID,searchtype):
         queryDict = {}
         imgIds = {}
-        i = 0;
+        
         for obj in QueryValue:
             if obj in self.classes:
                 query = 'item.Objects.'+ obj;
-                print(query)
-                queryDict.update({query : {"$exists" : True }})
-        print(queryDict)
+                queryDict.update({query : { "$exists" : True }})
+        
+        # search on previously uploaded images only
+        if (searchtype=="prev_upload") :
+
+            # find the latest timestamp for the latest upload by current user 
+            prev_Timestamp_cursor = self.timestampsCOl.find({'userID' : userID}).sort('_id', pymongo.DESCENDING).limit(1)
+            prev_Timestamp = list(prev_Timestamp_cursor)[0]['time']
+
+            # search for this timestamp
+            queryDict.update( { 'item.File.TimeStamp' : prev_Timestamp } )
+
+        # search on all the images uploaded till now by the user 
+        elif(searchtype=="general") :
+
+            # find all the documents for the current user 
+            timestamps_cursor = self.timestampsCOl.find({'userID' : userID})
+
+            # or query on mongoDB over all the timestamps 
+            queryDict.update( { "$or" : [] } )
+            timestamp_docs = list(timestamps_cursor)
+            for doc in timestamp_docs :
+                queryDict["$or"].append( { "item.File.TimeStamp" : doc['time'] } )
+
         cursor = self.Col.find(queryDict)
         data = list(cursor)
+        
         for item in data:
             sourcefile = item['item']['SourceFile']
             file = item['item']['File']['FileName']
             #print(item["item"]["Objects"])
+            img=cv2.imread(sourcefile)
+            out_img = img
             objects = item["item"]["Objects"]
 
             img=cv2.imread(sourcefile)
             out_img = img
             for obj in objects:
-                    for det in objects[obj]:
-                        if obj in QueryValue:
-                            out_img = draw_bbox(out_img, det, obj)
+                for det in objects[obj] :
+                    if obj in QueryValue :
+                        out_img = draw_bbox(out_img, det, obj)
             print("imgapp/static/imgapp/"+file)
             cv2.imwrite("imgapp/static/imgapp/"+file,out_img)
-            imgIds.update({file : "imgapp/"+str(i)+".png"})
-            i += 1
+            imgIds.update({file : "imgapp/"+file})
+            
         return imgIds
 
 
+   
 
     # find objects in coco images
-    def FindObjects(self,QueryValue) :
+    def FindObjectsCOCO(self,QueryValue,Utils_Object) :
         with open("imgapp/categories.txt",'r') as f:
             Categories_Dict = json.load(f)
         queryDict = {}
@@ -71,7 +97,7 @@ class MongoQuery :
         for obj in QueryValue :
             key = self.find_key(obj,Categories_Dict)
             if (key==-1) :
-                return(self.check_aerial(QueryValue))
+                return imageids
             query = 'item.Objects.'+key+'.'+obj
             queryDict.update({query : {"$exists" : True }})
         cursor = self.Col.find(queryDict)
@@ -92,6 +118,10 @@ class MongoQuery :
                 imageids.update({id : path})
                 return
             appendID(image)
+        
+        # save the annotated images 
+        Utils_Object.save_annotatedFile(imageids,QueryValue)    
+        
         return imageids
 
 

@@ -1,7 +1,7 @@
 {% extends 'login/Base.html' %}
 
 {% block content %}
-<form action="../createuser/" method="POST">{% csrf_token %}
+<form action="{% url 'createuser' %}" method="POST">{% csrf_token %}
       <div class="container">
         <h1>Sign Up</h1> 
         <hr>

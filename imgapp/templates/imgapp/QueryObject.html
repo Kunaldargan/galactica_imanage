@@ -1,9 +1,24 @@
 {% extends 'imgapp/base.html'%}
 {% block content %}
+
+
 <h2>Search Objects in Images</h2>
-<form method="post" action="../objectqueryresults/" enctype="multipart/form-data"> {% csrf_token %}
+<form method="post" action="{% url 'objectresults' %}" enctype="multipart/form-data"> {% csrf_token %}
     
-    Objects : <input type="text" name="queryvalue"><br><br>
+    <legend>Select Multiple Objects</legend>
+    <div class="row-fluid">
+    <select name="queryvalue" class="selectpicker" data-show-subtext="true" data-live-search="true" multiple >
+      {% for object in objectslist %}
+        <option value="{{object}}">{{object}}</option>
+      {% endfor %}
+      </select><br><br>
+    </div>
+    <legend>Search Type</legend>
+    <select name="searchtype" placeholder="select" >
+      <option value="COCO" >COCO</option>
+      <option value="general" >General</option>
+      <option value="prev_upload" >Custom</option>
+    </select><br><br>
     <button type="submit" >Search Images</button>
 </form>
 {% endblock %}

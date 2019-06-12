@@ -4,5 +4,14 @@
 		"database": "AerialDB",
 		"collection": "Col"
 	},
-	"source":{}
+	"darknet":{
+		"weights": "",
+		"cfg" : "",
+		"names" : "",
+		"obj" : "",
+		"threshold" : 0.2
+	},
+	"coco" :{
+		"ann_file" : ""
+	}
 }
