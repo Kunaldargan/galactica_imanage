@@ -26,10 +26,12 @@ class MongoQuery :
         return
 
     def find_key(self,queryfield,Config) :
+        keys=[]
         for key,value in Config.items() :
             if queryfield in value:
-                return(key)
-        return -1
+                keys.append(key)
+        return keys
+        
 
     def custom_search(self,QueryValue,userID,searchtype):
         queryDict = {}
@@ -100,10 +102,10 @@ class MongoQuery :
         queryDict = {}
         imageids = {}
         for obj in QueryValue :
-            key = self.find_key(obj,Categories_Dict)
-            if (key==-1) :
+            keys = self.find_key(obj,Categories_Dict)
+            if (len(keys)==0) :
                 return imageids
-            query = 'item.Objects.'+key+'.'+obj
+            query = 'item.Objects.'+keys[0]+'.'+obj
             queryDict.update({query : {"$exists" : True }})
         cursor = self.Col.find(queryDict)
         data = list(cursor)
@@ -133,18 +135,24 @@ class MongoQuery :
     def Find_Key_Val(self,query_dict) :
         with open('imgapp/Config.txt') as Config_file :
             Config = json.load(Config_file)
-        queries = {}
+        queries = { "$and" : [] }
         for queryfield in query_dict.keys() :
-            key = self.find_key(queryfield,Config)
-            if (key == -1) :
+            keys = self.find_key(queryfield,Config)
+            if (len(keys)==0) :
                 return []
-            query = 'item.'+key+'.'+queryfield
-            queries.update({ query : query_dict[queryfield]})
+            else :
+                queries["$and"].append( { "$or" : [] } )
+                for key in keys :
+                    query = 'item.'+key+'.'+queryfield
+                    queries["$and"][-1]["$or"].append({ query : query_dict[queryfield] })
+        # print(queries)
         cursor = self.Col.find(queries)
         data = list(cursor)
         imageNames = []
         for image in data :
             imageNames.append(image['item']['SourceFile'])
+
+        # print(imageNames)
         return imageNames
 
 
