@@ -9,6 +9,7 @@ import shutil
 import ast
 from ImageManagementSystem.settings import BASE_DIR
 from .uploadThreadClass import UpdateMongo_Thread
+import json
 
 # create media directories
 if not os.path.exists('data') :
@@ -23,9 +24,13 @@ DATAPATH = os.path.join(BASE_DIR,'data')
 # static path
 STATICPATH = BASE_DIR+'/imgapp/static'
 
+# objects list
+with open(os.path.join(BASE_DIR,'App_Settings.json')) as f :
+    settings = json.load(f)
+with open(settings["darknet"]["names"],'r') as c:
+    classes = [x.rstrip() for x in c.readlines()]
 
-objectslist = ["person","bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat","traffic light", "fire hydrant", "stop sign", "parking meter", "bench","bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe","backpack", "umbrella", "handbag", "tie", "suitcase","frisbee", "skis", "snowboard", "sports ball", "kite", "baseball bat", "baseball glove", "skateboard", "surfboard", "tennis racket","bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl","banana", "apple", "sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza", "donut", "cake","chair", "couch", "potted plant", "bed", "dining table", "toilet","tv", "laptop", "mouse", "remote", "keyboard", "cell phone","microwave", "oven", "toaster", "sink", "refrigerator","book", "clock", "vase", "scissors", "teddy bear", "hair drier", "toothbrush"]
-
+objectslist = classes
 
 
 # render home screen template

@@ -11,7 +11,6 @@ class MongoQuery :
     client = None
     db = None
     Col = None
-
     def __init__(self):
         self.client = pymongo.MongoClient(MONGO_CONNECTION_URL)
         self.db = self.client[MONGO_DATABASE]
