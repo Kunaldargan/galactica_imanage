@@ -1,5 +1,5 @@
 import threading
-from .UpdateMongoDB import update_Mongo
+from .UpdateMongoDB import update_Mongo, delete_User_Collection
 
 
 # Class to update mongoDB 
@@ -15,6 +15,7 @@ class UpdateMongo_Thread (threading.Thread):
         self.Utils_Object = Utils_Object
         self.timestamp = timestamp
         self.userID = userID
+
     # run method
     def run(self):
         print("Starting Thread")

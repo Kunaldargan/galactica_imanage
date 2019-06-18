@@ -1,8 +1,7 @@
 {
 	"mongodb": {
 		"connection_url": "mongodb://127.0.0.1:27017",
-		"database": "database",
-		"collection": "Col"
+		"database": "database"
 	},
 	"darknet": {
 		"weights":"/home/udayaan/Downloads/yolov3-tiny.weights",

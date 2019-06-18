@@ -22,7 +22,6 @@ with open('App_Settings.json') as f :
     settings = json.load(f)
 MONGO_CONNECTION_URL = settings['mongodb']['connection_url']
 MONGO_DATABASE = settings['mongodb']['database']
-MONGO_COLLECTION = settings['mongodb']['collection']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/

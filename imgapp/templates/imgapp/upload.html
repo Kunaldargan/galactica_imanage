@@ -3,12 +3,12 @@
 <h2>Upload Images</h2>
 <form method="post" action="{% url 'upload' %}" enctype="multipart/form-data"> {% csrf_token %}
     <legend>Dataset Name:</legend>
-    <input type="text" name="dataset" ><br><br>
+    <input type="text" name="dataset" required><br><br>
     <legend>Select Search Type :</legend>
     <input type="radio" name="imagetype" value="aerial" checked> Aerial<br>
     <input type="radio" name="imagetype" value="general"> General<br>
     <input type="radio" name="imagetype" value="satellite"> Satellite<br><br>
-    <input type="file" name="files" multiple/><br><br>
-    <input type="submit" value="Upload"/>
+    <input type="file" name="files" multiple required><br><br>
+    <input type="submit" value="Upload">
 </form>
 {% endblock %}

@@ -2,14 +2,19 @@ from pymongo import MongoClient
 from .ExtractExif import Extract_Exif
 from copy import deepcopy
 import pprint
-from ImageManagementSystem.settings import MONGO_CONNECTION_URL, MONGO_DATABASE, MONGO_COLLECTION
+from ImageManagementSystem.settings import MONGO_CONNECTION_URL, MONGO_DATABASE, BASE_DIR
 import cv2
+import shutil
+import os
 
 
 # Upload metadata of the images to the mongoDB
-# Also, upload apply the object detection model to detect the objects and get the bbox coordinates 
+# Also, apply the object detection model to detect the objects and get the bbox coordinates 
 # Upload these bbox coordinates with the image's metadata
-def update_Mongo(DataSetName,ImageType,DirectoryPath, Utils_Object,timestamp,userID) :
+def update_Mongo(DataSetName, ImageType, DirectoryPath, Utils_Object, timestamp, userID) :
+    """
+    Upload files to mongodb
+    """
 
     # extract exif data
     Ext_Exif = Extract_Exif()
@@ -18,11 +23,12 @@ def update_Mongo(DataSetName,ImageType,DirectoryPath, Utils_Object,timestamp,use
     # get reference to mongo client
     client = MongoClient(MONGO_CONNECTION_URL)
     db = client[MONGO_DATABASE]
-    Exif_col = db[MONGO_COLLECTION]
+    # print(userID)
+    Exif_col = db[str(userID)]
 
-    # Upload the timestamps
-    timestampsCOL = db['timestamps']
-    timestampsCOL.insert_one({ "time" : timestamp , "userID" : userID })
+    # Upload timestamps and dataset name 
+    loginCOL = db['login']
+    loginCOL.insert_one({ "time" : timestamp , "userID" : userID , "dataset" : str(userID)+"_"+DataSetName })
 
 
     imgitems = []
@@ -61,6 +67,43 @@ def update_Mongo(DataSetName,ImageType,DirectoryPath, Utils_Object,timestamp,use
     
     # upload all the image's metadata
     Exif_col.insert_many(imgitems)
+
+
+def delete_User_Collection(userID) :
+    """
+    drop collection for current user 
+    """
+    
+    # get reference to mongo client
+    client = MongoClient(MONGO_CONNECTION_URL)
+    db = client[MONGO_DATABASE]
+    Col = db[str(userID)]
+
+    # get reference to upload tables for this user in mongo
+    LoginCOL = db['login']
+    all_uploads_cursor = LoginCOL.find({'userID' : userID,'time' : {"$exists" : True}})
+    all_uploads = list(all_uploads_cursor)
+    
+    # if no uploads yet
+    if (len(all_uploads)==0) :
+        return -1
+    
+    # remove all the data files 
+    for doc in all_uploads :
+        dataset_name = doc['dataset']
+        dataset_path = os.path.join(BASE_DIR+'/data',dataset_name)
+        if (os.path.exists(dataset_path)):
+            shutil.rmtree(dataset_path)
+    
+    # drop collection 
+    Col.drop()
+
+    # delete docs from upload records table
+    LoginCOL.delete_many({'userID' : userID, 'time' : {"$exists" : True}})
+    
+    return 0
+
+
 
 
 if __name__=='__main__' :

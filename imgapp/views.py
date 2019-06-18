@@ -8,7 +8,7 @@ from .utils import Utils
 import shutil
 import ast
 from ImageManagementSystem.settings import BASE_DIR
-from .uploadThreadClass import UpdateMongo_Thread
+from .uploadThreadClass import UpdateMongo_Thread, delete_User_Collection
 import json
 
 # create media directories
@@ -37,7 +37,7 @@ objectslist = classes
 def Home(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loginform'))
-    return render(request,"imgapp/home.html", {})
+    return render(request,"imgapp/home.html", {'username':request.user.username})
 
 # render upload images form template
 def Form(request):
@@ -49,14 +49,14 @@ def Form(request):
 def Upload(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loginform'))
+    userID = request.user.pk    
     # save the image files in the data directory
     file_list = request.FILES.getlist("files")
     dataset = request.POST['dataset']
     imagetype = request.POST['imagetype']
-    path_dataset = os.path.join(DATAPATH,dataset)
-    path_imagetype = os.path.join(path_dataset,imagetype)
+    path_dataset = os.path.join(DATAPATH,str(userID)+"_"+dataset)
+    path_imagetype = os.path.join(path_dataset,str(userID)+"_"+imagetype)
     timestamp = str(datetime.datetime.now().strftime('%Y-%m-%d-%H:%M:%S'))
-    userID = request.user.pk
     
     for count, x in enumerate(file_list):
         # print(type(x)) # class object of django image type
@@ -81,6 +81,18 @@ def UpdatedMongo(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('loginform'))
     return render(request, "imgapp/DatabaseUpdated.html", {})
+
+
+# drop user collection
+def delete(request) :
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('loginform'))
+    success = delete_User_Collection(request.user.pk)
+
+    if (success==-1) :
+        return render(request,"imgapp/Collection_dropped.html",{'msg' : "No data to delete!"})
+    return render(request,"imgapp/Collection_dropped.html",{'msg' : "Deletion Successful!"})
+
 
 # Query key-value pairs template
 def QueryMongo(request) :
@@ -110,7 +122,7 @@ def QueryResults(request) :
         query_field_list[i] = RemoveSpaces(query_field_list[i])
         query_val_list[i] = ast.literal_eval(query_val_list[i])
         query_dict.update({query_field_list[i] : query_val_list[i]})
-    imagenames = QueryMongo.Find_Key_Val(query_dict)
+    imagenames = QueryMongo.Find_Key_Val(query_dict,request.user.pk)
     if (len(imagenames)==0) :
         return render_to_response('imgapp/NoImagesFound.html')
     result = os.path.join(STATICPATH,'imgapp')
@@ -157,7 +169,9 @@ def Showresults_Objects(result) :
     filenames = os.listdir(result)
     for file in filenames :
         path = os.path.join('imgapp',file)
-        showimage = "<div class=\"col-md-4\"><div class=\"thumbnail\"><img src=\" {% static \""+path+"\" %}\" alt = "+file+" style=\"width:100%\"><div class=\"caption\"><p>"+file+"</p></div></div></div>"
+        viewbutton = "<a href=\" {% static \""+path+"\" %}\" class=\"btn btn-primary btn-sm\"><span class=\"glyphicon glyphicon-picture\"></span> </a>"
+        downloadButton = "<a href=\" {% static \""+path+"\" %}\" download class=\"btn btn-success btn-sm\"><span class=\"glyphicon glyphicon-download-alt\"></span> </a>"
+        showimage = "<div class=\"col-md-4\"><div class=\"thumbnail\" ><img src=\" {% static \""+path+"\" %}\" alt = "+file+" >"+file+"  "+downloadButton+"  "+viewbutton+"</div></div>"
         response = response +showimage
     response = response + "</div>{% endblock %}"
     file = open("imgapp/templates/imgapp/Showresults_Objects.html",'w')
@@ -173,7 +187,9 @@ def Showresults_keyValue(paths,destPath) :
         path = shutil.copy(path,destPath)
         filename = path[path.rfind('/')+1:]
         newpath = os.path.join('imgapp',filename)
-        showimage = "<div class=\"col-md-4\"><div class=\"thumbnail\"><img src=\" {% static \""+newpath+"\" %}\" alt = "+filename+" style=\"width:100%\"><div class=\"caption\"><p>"+filename+"</p></div></div></div>"
+        viewbutton = "<a href=\" {% static \""+newpath+"\" %}\" class=\"btn btn-primary btn-sm\"><span class=\"glyphicon glyphicon-picture\"></span> </a>"
+        downloadButton = "<a href=\" {% static \""+newpath+"\" %}\"  download class=\"btn btn-success btn-sm\"><span class=\"glyphicon glyphicon-download-alt\"></span> </a>"
+        showimage = "<div class=\"col-md-4\"><div class=\"thumbnail\"><img src=\" {% static \""+newpath+"\" %}\" alt = "+filename+" >"+filename+"  "+downloadButton+"  "+viewbutton+"</div></div>"
         response = response +showimage
     response = response + "</div>{% endblock %}"
     file = open("imgapp/templates/imgapp/Showresults_KeyVal.html",'w')

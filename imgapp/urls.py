@@ -10,4 +10,5 @@ urlpatterns = [
     path('results/',views.QueryResults,name='results'),
     path('objectquery/',views.QueryObject,name='queryobject'),
     path('objectqueryresults/',views.QueryObjectResult,name='objectresults'),
+    path('deleteCollections/',views.delete,name='dropcollection')
 ]

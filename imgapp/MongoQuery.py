@@ -4,7 +4,7 @@ import json
 import ast
 import cv2
 from .utils import draw_bbox
-from ImageManagementSystem.settings import MONGO_CONNECTION_URL, MONGO_DATABASE, MONGO_COLLECTION, BASE_DIR
+from ImageManagementSystem.settings import MONGO_CONNECTION_URL, MONGO_DATABASE, BASE_DIR
 import os
 
 class MongoQuery :
@@ -14,8 +14,7 @@ class MongoQuery :
     def __init__(self):
         self.client = pymongo.MongoClient(MONGO_CONNECTION_URL)
         self.db = self.client[MONGO_DATABASE]
-        self.Col = self.db[MONGO_COLLECTION]
-        self.timestampsCOl = self.db['timestamps']
+        self.timestampsCOl = self.db['login']
         with open(os.path.join(BASE_DIR,'App_Settings.json')) as f :
             self.settings = json.load(f)
         with open(self.settings["darknet"]["names"],'r') as c:
@@ -33,19 +32,24 @@ class MongoQuery :
         
 
     def custom_search(self,QueryValue,userID,searchtype):
-        queryDict = {}
+        print(userID)
+        self.Col = self.db[str(userID)]
+        queryDict = {"$and" : []}
         imgIds = {}
         
+        if (len(QueryValue)==0):
+            return imgIds
+
         for obj in QueryValue:
             if obj in self.classes:
                 query = 'item.Objects.'+ obj;
-                queryDict.update({query : { "$exists" : True }})
+                queryDict["$and"].append({query : { "$exists" : True }})
         
         # search on previously uploaded images only
         if (searchtype=="prev_upload") :
 
             # find the latest timestamp for the latest upload by current user 
-            prev_Timestamp_cursor = self.timestampsCOl.find({'userID' : userID}).sort('_id', pymongo.DESCENDING).limit(1)
+            prev_Timestamp_cursor = self.timestampsCOl.find({'userID' : userID,'time' : {"$exists" : True}}).sort('_id', pymongo.DESCENDING).limit(1)
             prev_Timestamp_list = list(prev_Timestamp_cursor) 
             # incase no uploads yet, no timestamps in database till now
             # precaution for index error
@@ -54,20 +58,26 @@ class MongoQuery :
             prev_Timestamp = prev_Timestamp_list[0]['time']
 
             # search for this timestamp
-            queryDict.update( { 'item.File.TimeStamp' : prev_Timestamp } )
+            queryDict["$and"].append( { 'item.File.TimeStamp' : prev_Timestamp } )
 
         # search on all the images uploaded till now by the user 
-        elif(searchtype=="general") :
+        elif(searchtype=="custom") :
 
             # find all the documents for the current user 
-            timestamps_cursor = self.timestampsCOl.find({'userID' : userID})
+            timestamps_cursor = self.timestampsCOl.find({'userID' : userID,'time' : {"$exists" : True}})
 
             # or query on mongoDB over all the timestamps 
-            queryDict.update( { "$or" : [] } )
+            queryDict["$and"].append( { "$or" : [] } )
             timestamp_docs = list(timestamps_cursor)
-            for doc in timestamp_docs :
-                queryDict["$or"].append( { "item.File.TimeStamp" : doc['time'] } )
 
+            # no uploads yet
+            if (len(timestamp_docs)==0) :
+                return imgIds
+                
+            for doc in timestamp_docs :
+                queryDict["$and"][-1]["$or"].append( { "item.File.TimeStamp" : doc['time'] } )
+
+        print(queryDict)
         cursor = self.Col.find(queryDict)
         data = list(cursor)
         
@@ -96,6 +106,7 @@ class MongoQuery :
 
     # find objects in coco images
     def FindObjectsCOCO(self,QueryValue,Utils_Object) :
+        self.Col = self.db['COCO']
         with open("imgapp/categories.txt",'r') as f:
             Categories_Dict = json.load(f)
         queryDict = {}
@@ -131,7 +142,8 @@ class MongoQuery :
         return imageids
 
 
-    def Find_Key_Val(self,query_dict) :
+    def Find_Key_Val(self,query_dict,userID) :
+        self.Col = self.db[str(userID)]        
         with open('imgapp/Config.txt') as Config_file :
             Config = json.load(Config_file)
         queries = { "$and" : [] }

@@ -4,7 +4,7 @@ from .views import LoginForm, LoginSubmit, Logout, SignUpForm, createUser, SignU
 from imgapp import urls
 
 urlpatterns = [
-    path('loginform/',LoginForm,name ='loginform'),
+    path('',LoginForm,name ='loginform'),
     path('loginsubmit/',LoginSubmit,name='loginsubmit'),
     path('logout/',Logout,name='logout'),
     path('signup/',SignUpForm,name='signup'),

@@ -17,9 +17,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('',include('login.urls')),
     path('imgapp/',include('imgapp.urls')),
     path('admin/', admin.site.urls),
-    path('login/',include('login.urls'))
 ]
   
 

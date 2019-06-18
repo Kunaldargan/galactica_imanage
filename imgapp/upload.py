@@ -62,11 +62,11 @@ def ListObjects(annotations_list,category) :
                     list_valdict.append(val_dict)
 
 
-            # cat_dict.update( {cat_name : val_dict } )
+            
     return img_dict
 
 
-with open('/home/galactica/Downloads/annotations/instances_val2017.json') as json_file :
+with open('instances_val2017.json') as json_file :
     data = json.load(json_file)
     annotationsList = data["annotations"]
     category = data["categories"]
@@ -81,28 +81,20 @@ with open('/home/galactica/Downloads/annotations/instances_val2017.json') as jso
     #         category_dict[key].append(cat['name'])
     # print(category_dict)
     imgdict = ListObjects(annotationsList,category)
-    # print("Extracting ...")
+   
     Ext_Exif = Extract_Exif()
     NewExtAll = []
     ExtALL = Ext_Exif.Extract_MetaData('/home/galactica/Downloads/val2017')
-    # pprint(ExtALL)
-    # print("Extracted!")
-    # print("Adding Objects ...")
+    
     for imgname in imgdict.keys() :
         meta = ExtALL[imgname]
         meta.update( imgdict[imgname] )
         dict = { "item" : meta }
         NewExtAll.append(dict)
-    # pprint(NewExtAll)
-    # print("Objects Added!")
+    
     client = MongoClient("mongodb://127.0.0.1")
     db = client.database
-    Col = db.Col
-    # ImagetypeName = 'RBG'
-    # DatasetName  = 'Coco'
-    # Imagetype = { ImagetypeName : NewExtAll}
-    # Dataset = {DatasetName:Imagetype}
-    # print("Inserting dataset ...")
-    # Col.insert_one(Dataset)
+    Col = db['COCO']
+    
     Col.insert_many(NewExtAll)
-    # print("Done!")
+   

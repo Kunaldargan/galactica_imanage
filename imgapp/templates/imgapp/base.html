@@ -52,38 +52,29 @@ input[type=submit] {
         border-radius: 4px;
         cursor: pointer;
 }
-
-input[type=file] {
-        position: absolute;
-        text-align: center;
-        margin: 0 auto;
-}
-      
 input[type=submit]:hover {
         background-color: black;
 }
+
 form {
-        position: absolute;
-        left: 40%;
-        top: 30%;
-        margin: 0;
-        text-align: center;
-        padding: 40px;
+        text-align: left;
+        padding: 30px;
         border: 1px solid #ccc;
         background-color: #f3f3f3;
 }
 h2 {
-        line-height: 0;
-        position: absolute;
-        top: 20%;
-        width: 100%;
-        text-align: center;
-        left: 0;
-        margin: 0;
-        padding: 0;
+        text-align: left;
+
 }
+ .thumbnail {
+     text-align: right;
+ }
 
-
+.thumbnail:hover {
+        -ms-transform: scale(1.1); /* IE 9 */
+        -webkit-transform: scale(1.1); /* Safari 3-8 */
+        transform: scale(1.1);
+}
 
 </style>
 </head>
@@ -95,14 +86,19 @@ h2 {
             <li><a href="../query/">Query Images</a></li>
             <li><a href="../objectquery/">Object Query</a></li>
             <li><a href="https://www.galactica.ai/">About</a></li>  
-            <li style="float:right"><a href="{% url 'logout' %}" >Logout</a></li>              
+            <li style="float:right"><a href="{% url 'logout' %}" >Logout</a></li> 
+            <li style="float:right"><a href="{% url 'dropcollection' %}">Delete</a></li>             
     </ul>
 
 </body>
 
 <body>
     <div class="container">
-        {% block content %}
-        {% endblock %}
+        
+        <div class="col-md-12">
+            {% block content %}
+            {% endblock %}
+        </div>
+        
     </div>
 </body>
