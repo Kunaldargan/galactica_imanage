@@ -1,0 +1,17 @@
+scikit-image==0.15.0
+setuptools==39.0.1
+Cython==0.29.10
+numpy==1.16.1
+pymongo==3.8.0
+matplotlib==3.0.2
+PyExifTool==0.1.1
+requests==2.22.0
+pycocotools==2.0.0
+Django==2.2.1
+pytest==4.6.2
+tensorflow==1.13.1
+opencv-python
+webcolors==1.9.1
+yolo34py
+django-suit==0.2.26
+

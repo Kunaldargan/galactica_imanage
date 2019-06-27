@@ -1,0 +1,15 @@
+{% extends 'admin/base_site.html'%}
+{% block content %}
+<h1>Upload Images</h1>
+<form method="post" action="{% url 'upload' %}" enctype="multipart/form-data"> {% csrf_token %}
+    <legend>Dataset Name:</legend>
+    <input type="text" name="dataset" required><br><br>
+    <legend>Select Search Type :</legend>
+    <input type="radio" name="imagetype" value="aerial" checked> Aerial<br>
+    <input type="radio" name="imagetype" value="general"> General<br>
+    <input type="radio" name="imagetype" value="satellite"> Satellite<br><br>
+    <input type="file" name="files" multiple required><br><br>
+    <input type="submit" value="Upload">
+</form>
+{% endblock %}
+

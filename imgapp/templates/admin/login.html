@@ -1,0 +1,155 @@
+{% extends 'admin/login.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <head>
+        <style>
+            .loginButton {
+                -moz-box-shadow: 0px 10px 14px -7px #276873;
+                -webkit-box-shadow: 0px 10px 14px -7px #276873;
+                box-shadow: 0px 10px 14px -7px #276873;
+                background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #408c99));
+                background:-moz-linear-gradient(top, #599bb3 5%, #408c99 100%);
+                background:-webkit-linear-gradient(top, #599bb3 5%, #408c99 100%);
+                background:-o-linear-gradient(top, #599bb3 5%, #408c99 100%);
+                background:-ms-linear-gradient(top, #599bb3 5%, #408c99 100%);
+                background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+                filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#599bb3', endColorstr='#408c99',GradientType=0);
+                background-color:#599bb3;
+                -moz-border-radius:8px;
+                -webkit-border-radius:8px;
+                border-radius:8px;
+                display:inline-block;
+                cursor:pointer;
+                color:#ffffff;
+                font-family:Courier;
+                font-size:12px;
+                font-weight:bold;
+                padding:5px 32px;
+                text-decoration:none;
+                text-shadow:0px 1px 0px #3d768a;
+        }
+        .loginButton:hover {
+            background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #408c99), color-stop(1, #599bb3));
+            background:-moz-linear-gradient(top, #408c99 5%, #599bb3 100%);
+            background:-webkit-linear-gradient(top, #408c99 5%, #599bb3 100%);
+            background:-o-linear-gradient(top, #408c99 5%, #599bb3 100%);
+            background:-ms-linear-gradient(top, #408c99 5%, #599bb3 100%);
+            background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#408c99', endColorstr='#599bb3',GradientType=0);
+            background-color:#408c99;
+        }
+        .Signup {
+            -moz-box-shadow: 0px 10px 14px -7px #276873;
+            -webkit-box-shadow: 0px 10px 14px -7px #276873;
+            box-shadow: 0px 10px 14px -7px #276873;
+            background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #408c99));
+            background:-moz-linear-gradient(top, #599bb3 5%, #408c99 100%);
+            background:-webkit-linear-gradient(top, #599bb3 5%, #408c99 100%);
+            background:-o-linear-gradient(top, #599bb3 5%, #408c99 100%);
+            background:-ms-linear-gradient(top, #599bb3 5%, #408c99 100%);
+            background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#599bb3', endColorstr='#408c99',GradientType=0);
+            background-color:#599bb3;
+            -moz-border-radius:8px;
+            -webkit-border-radius:8px;
+            border-radius:8px;
+            display:inline-block;
+            cursor:pointer;
+            color:#ffffff;
+            font-family:Courier;
+            font-size:12px;
+            font-weight:bold;
+            padding:5px 32px;
+            text-decoration:none;
+            text-shadow:0px 1px 0px #3d768a;
+            position: relative;
+            left: 80px;
+        }
+        .Signup:hover {
+            background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #408c99), color-stop(1, #599bb3));
+            background:-moz-linear-gradient(top, #408c99 5%, #599bb3 100%);
+            background:-webkit-linear-gradient(top, #408c99 5%, #599bb3 100%);
+            background:-o-linear-gradient(top, #408c99 5%, #599bb3 100%);
+            background:-ms-linear-gradient(top, #408c99 5%, #599bb3 100%);
+            background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#408c99', endColorstr='#599bb3',GradientType=0);
+            background-color:#408c99;
+        }
+
+        body {
+        background: url('{% static "/Logo_Vertical.png" %}') ;
+        background-color: #cccccc;
+        background-repeat: repeat space;
+        background-repeat: repeat repeat;
+        background-repeat: round space;
+        background-size: 300px 200px, cover; 
+
+        /* Center and scale the image nicely */
+        background-position: center;
+        /* background-size: cover; */
+        }
+    </style>
+    </head>
+
+    {% if form.errors and not form.non_field_errors %}
+        <p class="errornote">
+            {% if form.errors.items|length == 1 %}{% trans "Please correct the error below." %}{% else %}
+                {% trans "Please correct the errors below." %}{% endif %}
+        </p>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <p class="errornote">
+                {{ error }}
+            </p>
+        {% endfor %}
+    {% endif %}
+
+    <div id="content-main">
+        <h1>GALACTICA I'MANAGE</h1>
+        <!-- <img src= alt="logo" style="padding:5px;margin:0px 10px 0px 10px" > -->
+        {% if user.is_authenticated %}
+            <p class="errornote">
+                {% blocktrans trimmed %}
+                    You are authenticated as {{ username }}, but are not authorized to
+                    access this page. Would you like to login to a different account?
+                {% endblocktrans %}
+            </p>
+        {% endif %}
+        <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+            <div class="form-row{% if form.username.errors %} has-danger{% endif %}">
+                username:
+                <input type="text" name="{{ form.username.html_name }}" id="{{ form.username.id_for_label }}"
+                       placeholder="{{ form.username.label }}" maxlength="254" value="{% if form.username.value %}{{ form.username.value }}{% endif %}" class="form-control form-control-lg">
+                {{ form.username.errors }}
+            </div>
+            <div class="form-row{% if form.password.errors %} has-danger{% endif %}">
+                password:
+                <input type="password" name="{{ form.password.html_name }}" id="{{ form.password.id_for_label }}" placeholder="{{ form.password.label }}" class="form-control form-control-lg">
+                {{ form.password.errors }}
+                <input type="hidden" name="next" value="{{ next }}"/>
+            </div>
+            {% url 'admin_password_reset' as password_reset_url %}
+            {% if password_reset_url %}
+                <div class="password-reset-link">
+                    <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
+                </div>
+            {% endif %}
+            <div class="submit-row">
+                <label>&nbsp;</label><input type="submit" class="loginButton" value="{% trans 'Log in' %}"/>
+                
+                <a href="{% url 'signup' %}" class="Signup" ">Sign Up</a>
+            </div>
+        </form>
+
+        <script type="text/javascript">
+            if(!document.getElementById('id_username').value)
+                document.getElementById('id_username').focus();
+            else
+                document.getElementById('id_password').focus();
+        </script>
+    </div>
+{% endblock %}

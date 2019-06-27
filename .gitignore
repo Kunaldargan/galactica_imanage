@@ -1,0 +1,10 @@
+imgapp/static/imgapp/
+
+*.png
+*.jpeg
+*.jpg
+*.JPG
+*.JPEG
+*.PNG
+*.pyc
+App_Settings.json

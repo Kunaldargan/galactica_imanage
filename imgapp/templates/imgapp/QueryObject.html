@@ -1,0 +1,31 @@
+{% extends 'admin/base_site.html'%}
+{% block content %}
+
+<h1>Search Images</h1>
+<form method="post" action="{% url 'objectresults' %}" enctype="multipart/form-data"> {% csrf_token %}
+    <!-- <legend>Upload Duration</legend>
+    START <br> <input type="datetime-local" name="lower_datetime_upload" ><br>
+    TILL  <br> <input type="datetime-local" name="upper_datetime_upload" ><br><br> -->
+    <legend>Capture Duration</legend>
+    START <br> <input type="datetime-local" name="lower_datetime" ><br>
+    TILL  <br> <input type="datetime-local" name="upper_datetime" ><br><br>
+    <legend>Select Multiple Objects</legend>
+    <div class="row-fluid">
+    <select name="queryvalue" class="selectpicker" data-show-subtext="true" data-live-search="true" multiple >
+      {% for object in objectslist %}
+        <option value="{{object}}">{{object}}</option>
+      {% endfor %}
+      </select><br><br>
+
+
+    </div>
+    <legend>Search Type</legend>
+    <select name="searchtype" placeholder="select" >
+      <option value="prev_upload">LAST UPLOADED</option>
+      <option value="custom" >CUSTOM</option>
+      <option value="COCO" >COCO</option>
+    </select><br><br>
+    <button type="submit" >Search Images</button>
+</form>
+{% endblock %}
+
