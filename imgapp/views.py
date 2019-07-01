@@ -18,24 +18,18 @@ if not os.path.exists('uploads') :
 if not os.path.exists('imgapp/static') :
     os.mkdir('imgapp/static')
 
-
-
 # static path
 STATICPATH = BASE_DIR+'/imgapp/static'
 
 # objects list
 with open(os.path.join(BASE_DIR,'App_Settings.json')) as f :
     settings = json.load(f)
-with open(settings["darknet"]["names"],'r') as c:
-    classes = [x.rstrip() for x in c.readlines()]
+# with open(settings["darknet"]["names"],'r') as c:
+#     classes = [x.rstrip() for x in c.readlines()]
 
-objectslist = classes
-
-# render home screen template
-def Home(request) :
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('admin:login'))
-    return render(request,"imgapp/home.html", {'username':request.user.username})
+# objectslist = classes
+with open("imgapp/categories.txt",'r') as f:
+    objectslist = json.load(f)
 
 # render upload images form template
 def Form(request):
@@ -80,7 +74,6 @@ def UpdatedMongo(request) :
         return HttpResponseRedirect(reverse('admin:login'))
     return render(request, "imgapp/DatabaseUpdated.html", {})
 
-
 # drop user collection
 def delete(request) :
     if not request.user.is_authenticated:
@@ -91,50 +84,12 @@ def delete(request) :
         return render(request,"imgapp/Collection_dropped.html",{'msg' : "No data to delete!"})
     return render(request,"imgapp/Collection_dropped.html",{'msg' : "Deletion Successful!"})
 
-
-# Query key-value pairs template
-def QueryMongo(request) :
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('admin:login'))
-    return render(request, "imgapp/QueryDatabase.html", {})
-
-# parse input for query key-value spaces
-def RemoveSpaces(object) :
-    newObj = ""
-    for i in object :
-        if (i!=" "):
-            newObj = newObj+i
-    return newObj
-
-# find images with query key-value pairs
-def QueryResults(request) :
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('admin:login'))
-    QueryMongo = MongoQuery()
-    queryfield = request.POST['queryfield']
-    queryval = request.POST['queryvalue']
-    query_field_list = queryfield.split(',')
-    query_val_list = queryval.split(',')
-    query_dict = {}
-    for i in range(len(query_field_list)):
-        query_field_list[i] = RemoveSpaces(query_field_list[i])
-        query_val_list[i] = ast.literal_eval(query_val_list[i])
-        query_dict.update({query_field_list[i] : query_val_list[i]})
-    imagenames = QueryMongo.Find_Key_Val(query_dict,request.user.pk)
-    if (len(imagenames)==0) :
-        return render_to_response('imgapp/NoImagesFound.html')
-    result = os.path.join(STATICPATH,'imgapp')
-    if os.path.exists(result) :
-        shutil.rmtree(result)
-    os.mkdir(result)
-    return Showresults_keyValue(imagenames,result)
-
 # query for objects in images (template)
 def QueryObject(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('admin:login'))
 
-    context = {'objectslist' : objectslist}
+    context = {'objectslist' : sorted(objectslist.items())}
     return render(request,"imgapp/QueryObject.html",context)
 
 # format datetime 
@@ -193,30 +148,6 @@ def Showresults_Objects(result) :
     file.close()
     return render_to_response("imgapp/Showresults_Objects.html")
 
-# show results for key value queries,modifies the template to show the images required
-def Showresults_keyValue(paths,destPath) :
-
-    base = "{% extends 'admin/base_site.html'%}"
-    thumnailstyle = "<head><style>.thumbnail {text-align: right;}</style></head>"
-    response = base+"{% block content %}"+thumnailstyle+"<h1>Image Results</h1><hr><div class=\"row\">{% load static %}"
-    for path in paths :
-        path = shutil.copy(path,destPath)
-        filename = path[path.rfind('/')+1:]
-        newpath = os.path.join('imgapp',filename)
-        viewbutton = "<a href=\" {% static \""+newpath+"\" %}\" class=\"btn btn-default btn-sm\"><span class=\"icon-picture\"></span> </a>"
-        downloadButton = "<a href=\" {% static \""+newpath+"\" %}\"  download class=\"btn btn-default btn-sm\"><span class=\"icon-download\"></span> </a>"
-        showimage = "<div class=\"col-md-4\"><div class=\"thumbnail\"><img src=\" {% static \""+newpath+"\" %}\" alt = "+filename+" >"+filename+"  "+downloadButton+"  "+viewbutton+"</div></div>"
-        response = response +showimage
-    response = response + "</div>{% endblock %}"
-    file = open("imgapp/templates/imgapp/Showresults_KeyVal.html",'w')
-    file.write(response)
-    file.close()
-    return render_to_response("imgapp/Showresults_KeyVal.html")
-
-
-
-
-
 # Login Sign Up 
 def SignUp_Form(request) :
 
@@ -256,7 +187,6 @@ def SignUp_Form(request) :
     
     else :
         return render(request,'admin/SignUp.html',{'user_form':user_form,'profile_form':profile_form})
-
 
 def description(request) :
     if not request.user.is_authenticated:

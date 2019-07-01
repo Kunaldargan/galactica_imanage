@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from django import forms 
 from .models import Profile, Objects, Description
 from django.contrib.auth.models import User
+from bootstrap_select import BootstrapSelect
 
 class UserForm(ModelForm) :
     class Meta:
@@ -21,7 +22,7 @@ object_choices = [
 ]
 
 class ObjectsForm(ModelForm) :
-    objects = forms.MultipleChoiceField(choices=object_choices)
+    objects = forms.URLField(widget=BootstrapSelect(choices=object_choices))
 
     class Meta:
         model = Objects

@@ -32,8 +32,7 @@ def set_color(names_file):
 	print("no. of classes : ", n)
 	print("no. of colors : ", m)
 	for i in range(n):
-		if i > m :
-			j = i % m
+		j = i % m
 		color_map[classes[i].rstrip()] = webcolors.name_to_rgb(colors[j])
 
 def get_color(label):

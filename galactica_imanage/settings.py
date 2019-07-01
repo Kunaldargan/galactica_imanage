@@ -36,38 +36,13 @@ with open('App_Settings.json') as f :
 MONGO_CONNECTION_URL = settings['mongodb']['connection_url']
 MONGO_DATABASE = settings['mongodb']['database']
 
-# FILEBROWSER_MEDIA_ROOT = BASE_DIR
-# FILEBROWSER_DIRECTORY = 'uploads/'
+
 DATAPATH = os.path.join(BASE_DIR,'uploads')
 
 
-# FILEBROWSER_EXTENSIONS = getattr(settings, "FILEBROWSER_EXTENSIONS", {
-#     'Image': ['.jpg','.jpeg','.gif','.png','.tif','.tiff'],
-#     'Document': ['.pdf','.doc','.rtf','.txt','.xls','.csv'],
-#     'Video': ['.mov','.wmv','.mpeg','.mpg','.avi','.rm'],
-#     'Audio': ['.mp3','.mp4','.wav','.aiff','.midi','.m4p']
-# })
-# FILEBROWSER_SELECT_FORMATS = getattr(settings, "FILEBROWSER_SELECT_FORMATS", {
-#     'file': ['Image','Document','Video','Audio'],
-#     'image': ['Image'],
-#     'document': ['Document'],
-#     'media': ['Video','Audio'],
-# })
-
-
-# FILEBROWSER_VERSIONS_BASEDIR = 'thumbnails/'
-# FILEBROWSER_ADMIN_THUMBNAIL = getattr(settings, 'FILEBROWSER_ADMIN_THUMBNAIL', 'thumbnails')
-
-
-# FILEBROWSER_VERSION_PROCESSORS = getattr(settings, 'FILEBROWSER_VERSION_PROCESSORS', [
-#     'filebrowser.utils.scale_and_crop',
-# ])
-
-
-
 # Application definition
-
 INSTALLED_APPS = [
+    'bootstrap_select.apps.BootstrapSelectConfig',
     'filebrowser-suit',
     'filebrowser',
     'imgapp',
@@ -189,12 +164,8 @@ SUIT_CONFIG = {
         'sites',
         {'app' : 'imgapp', 'icon': None},
         {'label' : 'Imanage', 'icon' : 'icon-folder-open', 'url' : '/admin/filebrowser/browse/'},
-        # {'label' : 'Upload Images', 'icon' : 'icon-upload', 'url' : 'form'},
-        # {'label' : 'Query Metadata', 'icon' : 'icon-search', 'url' : 'query'},
         {'label' : 'Query Objects', 'icon' : 'icon-search', 'url' : 'queryobject'},
-        {'label' : 'About Us', 'icon' : 'icon-info-sign', 'url' : 'about'},        
-        # {'label' : 'Drop Database', 'icon' : 'icon-remove', 'url' : 'dropcollection'},
-        
+        {'label' : 'About Us', 'icon' : 'icon-info-sign', 'url' : 'about'},         
     ),
 
     # misc

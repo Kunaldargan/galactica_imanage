@@ -7,6 +7,23 @@ from .utils import draw_bbox, save_annotatedFile
 from galactica_imanage.settings import MONGO_CONNECTION_URL, MONGO_DATABASE, BASE_DIR
 import os
 
+
+
+# especially used for coco; find coco image id and append it to imageids
+def appendID(image, imageids) :
+    name = image['item']['File']['FileName']
+    index = 0
+    for s in name :
+        if (s!='0') :
+            break
+        index+=1
+    # find id of the coco dataset image
+    id = int(name[index:12])
+    path = image['item']['SourceFile']
+    imageids.update({id : path})
+    return
+
+
 class MongoQuery :
     client = None
     db = None
@@ -32,14 +49,11 @@ class MongoQuery :
         
 
     def custom_search(self,QueryValue,userID,searchtype,create_start,create_till):
-        print(userID,"#############################")
         self.Col = self.db[str(userID)]
         queryDict = {"$and" : []}
         imgIds = {}
         
-        # if (len(QueryValue)==0):
-        #     return imgIds
-
+       
         for obj in QueryValue:
             if obj in self.classes:
                 query = 'item.Objects.'+ obj;
@@ -128,54 +142,13 @@ class MongoQuery :
         data = list(cursor)
 
         for image in data :
-        # especially used for coco; find coco image id and append it to imageids
-            def appendID(image) :
-                name = image['item']['File']['FileName']
-                index = 0
-                for s in name :
-                    if (s!='0') :
-                        break
-                    index+=1
-            # find id of the coco dataset image
-                id = int(name[index:12])
-                path = image['item']['SourceFile']
-                imageids.update({id : path})
-                return
-            appendID(image)
+            appendID(image, imageids)
         
         # save the annotated images 
         save_annotatedFile(imageids,QueryValue)    
-        
         return imageids
-
-
-    def Find_Key_Val(self,query_dict,userID) :
-        self.Col = self.db[str(userID)]        
-        with open('imgapp/Config.txt') as Config_file :
-            Config = json.load(Config_file)
-        queries = { "$and" : [] }
-        for queryfield in query_dict.keys() :
-            keys = self.find_key(queryfield,Config)
-            if (len(keys)==0) :
-                return []
-            else :
-                queries["$and"].append( { "$or" : [] } )
-                for key in keys :
-                    query = 'item.'+key+'.'+queryfield
-                    queries["$and"][-1]["$or"].append({ query : query_dict[queryfield] })
-        # print(queries)
-        cursor = self.Col.find(queries)
-        data = list(cursor)
-        imageNames = []
-        for image in data :
-            imageNames.append(image['item']['SourceFile'])
-
-        # print(imageNames)
-        return imageNames
-
 
 
 if __name__=='__main__' :
     Query = MongoQuery()
-    # Query.FindObjects('tv')
-    Query.Find_Key_Val({'queryfield' : 'Aperture','queryvalue' : ast.literal_eval('4')})
+

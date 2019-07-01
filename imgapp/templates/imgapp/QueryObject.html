@@ -1,6 +1,12 @@
 {% extends 'admin/base_site.html'%}
 {% block content %}
-
+<head>
+  <style>
+    li a{
+      display: block
+    }
+  </style>
+</head>
 <h1>Search Images</h1>
 <form method="post" action="{% url 'objectresults' %}" enctype="multipart/form-data"> {% csrf_token %}
     <!-- <legend>Upload Duration</legend>
@@ -10,15 +16,35 @@
     START <br> <input type="datetime-local" name="lower_datetime" ><br>
     TILL  <br> <input type="datetime-local" name="upper_datetime" ><br><br>
     <legend>Select Multiple Objects</legend>
-    <div class="row-fluid">
-    <select name="queryvalue" class="selectpicker" data-show-subtext="true" data-live-search="true" multiple >
-      {% for object in objectslist %}
-        <option value="{{object}}">{{object}}</option>
+    <!-- <div class="row-fluid">
+    <select name="queryvalue" class="selectpicker" data-show-subtext="true" data-live-search="true" multiple size="10">
+      {% for key, objects in objectslist %}
+        <optgroup label="{{key}}">
+          {% for obj in objects %}
+            <option value="{{obj}}">{{obj}}</option>
+          {% endfor %}
+        </optgroup>
       {% endfor %}
-      </select><br><br>
+    </select><br><br>
+    </div> -->
 
-
-    </div>
+    <!-- <a onclick="myFunction()">Try it</a>
+    <div id="myDIV">
+        This is my DIV element.
+    </div> -->
+    <ul>
+    {% for key, objects in objectslist %}
+        <li>
+            <a onclick="myFunction('{{key}}')">{{key}}</a>
+        </li>
+          <select name="queryvalue" id="{{key}}" multiple size="4">
+              {% for obj in objects %}
+              <option value="{{obj}}">{{obj}}</option>
+              {% endfor %}
+          </select>        
+      {% endfor %}
+    </ul>
+        
     <legend>Search Type</legend>
     <select name="searchtype" placeholder="select" >
       <option value="prev_upload">LAST UPLOADED</option>
@@ -27,5 +53,17 @@
     </select><br><br>
     <button type="submit" >Search Images</button>
 </form>
+
+<script>
+    function myFunction(id) {
+      var x = document.getElementById(id);
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+    </script>
+    
 {% endblock %}
 
