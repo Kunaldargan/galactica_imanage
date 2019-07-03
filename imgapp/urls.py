@@ -1,6 +1,9 @@
+## url patterns inside the imgapp app
+
 from django.urls import path
 from . import views
 
+## urlpatterns 
 urlpatterns = [
     # path('upload/',views.Upload,name = 'upload'),
     path('form/',views.Form,name = 'form'),

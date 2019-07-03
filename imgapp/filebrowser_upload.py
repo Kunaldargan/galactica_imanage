@@ -1,3 +1,7 @@
+##@package filebrowser_upload
+#
+# override the filebrowser site functionalities
+ 
 from django.shortcuts import render, render_to_response,HttpResponse
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.urls import reverse
@@ -23,17 +27,20 @@ from .utils import Utils
 import datetime
 
 
-
+## Override filebrowser site functionalities
 class UserFileBrowserSite(FileBrowserSite):
+    
+    ## upload timestamp, set when upload page is loaded
     timestamp = ""
 
+    ## override upload method from filebrowser, timestamp set whenever upload template is rendered
+    # @param self reference to it's own object
+    # @param request http request
     def upload(self, request):
-        "Multipe File Upload."
         query = request.GET
         
         # timestamp set when the upload page is loaded 
         self.timestamp = str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-        
         
         request.current_app = self.name
         return render(request, 'filebrowser/upload.html', {
@@ -45,12 +52,10 @@ class UserFileBrowserSite(FileBrowserSite):
             'filebrowser_site': self
         })
 
+    ## override _upload_file method, updates the mongoDB with the meta-data of the images uploaded
+    # @param self reference to it's own object
+    # @param request http request
     def _upload_file(self, request):
-        """
-        Upload file to the server.
-        If temporary is true, we upload to UPLOAD_TEMPDIR, otherwise
-        we upload to site.directory
-        """
         if request.method == "POST":
             folder = request.GET.get('folder', '')
             temporary = request.GET.get('temporary', '')
@@ -112,15 +117,19 @@ class UserFileBrowserSite(FileBrowserSite):
             # let Ajax Upload know whether we saved it or not
             ret_json = {'success': True, 'filename': f.filename, 'temp_filename': temp_filename}
             print("\n \n \n hello world \nfile:"+full_path+" \n \n")
-
+            
+            # timestamp set by upload function
             timestamp = self.timestamp
             userID = request.user.pk
-            update_Mongo(folder,'aerial',full_path,timestamp,userID,True)
+            # update the mongoDB, is_file_flag set to True
+            update_Mongo('aerial',full_path,timestamp,userID,True)
+
             return HttpResponse(json.dumps(ret_json), content_type="application/json")
 
-    
+    ## override delete method, delete documents from mongoDB while deleting 
+    # @param self reference to it's own object
+    # @param request http request
     def delete(self, request):
-        "Delete existing File/Directory."
         query = request.GET
         path = u'%s' % os.path.join(self.directory, query.get('dir', ''))
         fileobject = FileObject(os.path.join(path, query.get('filename', '')), site=self)
@@ -146,8 +155,9 @@ class UserFileBrowserSite(FileBrowserSite):
         redirect_url = reverse("filebrowser:fb_browse", current_app=self.name) + query_helper(query, "", "filename,filetype")
         return HttpResponseRedirect(redirect_url)
 
-
+# filebrowser storage
 storage = DefaultStorage()
+
 # imgapp FileBrowser site
 site = UserFileBrowserSite(name='filebrowser', storage=storage)
 
@@ -160,7 +170,3 @@ site.add_action(rotate_90_counterclockwise)
 site.add_action(rotate_180)
 
 
-
-# from filebrowser.settings import (DIRECTORY, EXTENSIONS, SELECT_FORMATS, ADMIN_VERSIONS, ADMIN_THUMBNAIL, MAX_UPLOAD_SIZE, NORMALIZE_FILENAME,
-#                                   CONVERT_FILENAME, SEARCH_TRAVERSE, EXCLUDE, VERSIONS, VERSIONS_BASEDIR, EXTENSION_LIST, DEFAULT_SORTING_BY, DEFAULT_SORTING_ORDER,
-#                                   LIST_PER_PAGE, OVERWRITE_EXISTING, DEFAULT_PERMISSIONS, UPLOAD_TEMPDIR)

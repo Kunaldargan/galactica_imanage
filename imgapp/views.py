@@ -1,10 +1,13 @@
+## @package views
+#
+# handle requested views 
+
 from django.shortcuts import render, render_to_response,HttpResponse
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.urls import reverse
 import datetime
 import os
 from .MongoQuery import MongoQuery
-
 import shutil
 import ast
 from .forms import UserForm, ProfileForm, User
@@ -18,26 +21,22 @@ if not os.path.exists('uploads') :
 if not os.path.exists('imgapp/static') :
     os.mkdir('imgapp/static')
 
-# static path
+## static path
 STATICPATH = BASE_DIR+'/imgapp/static'
 
-# objects list
-with open(os.path.join(BASE_DIR,'App_Settings.json')) as f :
-    settings = json.load(f)
-# with open(settings["darknet"]["names"],'r') as c:
-#     classes = [x.rstrip() for x in c.readlines()]
-
-# objectslist = classes
+## objectslist = class names 
 with open("imgapp/categories.txt",'r') as f:
     objectslist = json.load(f)
 
-# render upload images form template
+## render upload images form template, not being used in imanage branch
+# @param request view request
 def Form(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('admin:login'))
     return render(request, "imgapp/upload.html", {})
 
-# upload images process
+## upload images after upload form is submitted, not being used in imanage branch
+# @param request view request
 def Upload(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('admin:login'))
@@ -68,13 +67,15 @@ def Upload(request):
     update_thread.start()
     return HttpResponseRedirect(reverse('updated'))
 
-# render database updated template after uploading the metadata on mongo
+## images uploaded confirmation, not being used in imanage branch
+# @param request view request
 def UpdatedMongo(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('admin:login'))
     return render(request, "imgapp/DatabaseUpdated.html", {})
 
-# drop user collection
+## drop user collection, not being used in the imanage branch
+# @param request view request
 def delete(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('admin:login'))
@@ -84,7 +85,8 @@ def delete(request) :
         return render(request,"imgapp/Collection_dropped.html",{'msg' : "No data to delete!"})
     return render(request,"imgapp/Collection_dropped.html",{'msg' : "Deletion Successful!"})
 
-# query for objects in images (template)
+## query images form
+# @param request view request
 def QueryObject(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('admin:login'))
@@ -92,7 +94,8 @@ def QueryObject(request) :
     context = {'objectslist' : sorted(objectslist.items())}
     return render(request,"imgapp/QueryObject.html",context)
 
-# format datetime 
+## format datetime (change "%Y-%M-%DT%H:%M" to "%Y-%M-%D %H:%M:%S")
+# @param time timestamp returned by the query form
 def format_datetime(time) :
     if (time == "") :
         return ""
@@ -103,7 +106,8 @@ def format_datetime(time) :
     formatted_datetime = date+" "+time
     return formatted_datetime
 
-# find images with query objects
+## process query, search on MongoDB and write the resulting template 
+# @param request view request
 def QueryObjectResult(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('admin:login'))
@@ -129,7 +133,8 @@ def QueryObjectResult(request) :
         return render_to_response('imgapp/NoImagesFound.html')
     return Showresults_Objects(result)
 
-# show results for Object queries,modifies the template to show the images required
+## show results for the queries,modifies the template to show the required images 
+# @param request view request
 def Showresults_Objects(result) :
 
     base = "{% extends 'admin/base_site.html'%}"
@@ -148,11 +153,10 @@ def Showresults_Objects(result) :
     file.close()
     return render_to_response("imgapp/Showresults_Objects.html")
 
-# Login Sign Up 
+## render sign_up form and create staff user when form is submitted 
+# @param request view request
 def SignUp_Form(request) :
 
-    # if not request.user.is_authenticated:
-    #     return HttpResponseRedirect(reverse('admin:login'))
     user_form = UserForm()
     profile_form = ProfileForm()
     if (request.method == 'POST') :
@@ -163,10 +167,7 @@ def SignUp_Form(request) :
             username = user_form.cleaned_data['username']
             password = user_form.cleaned_data['password']
             email = user_form.cleaned_data['email']
-            # print(password,"#########################")
-            # user = user_form.save()
-            # user.set_password(password)
-            # user.save()
+
             user = User.objects.create_user(username=username, email=email,is_staff=True)
             user.set_password(password)
             user.save()
@@ -188,6 +189,9 @@ def SignUp_Form(request) :
     else :
         return render(request,'admin/SignUp.html',{'user_form':user_form,'profile_form':profile_form})
 
+
+## render description template
+# @param request view request  
 def description(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('admin:login'))

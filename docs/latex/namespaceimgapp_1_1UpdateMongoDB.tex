@@ -1,0 +1,99 @@
+\hypertarget{namespaceimgapp_1_1UpdateMongoDB}{}\section{imgapp.\+Update\+Mongo\+DB Namespace Reference}
+\label{namespaceimgapp_1_1UpdateMongoDB}\index{imgapp.\+Update\+Mongo\+DB@{imgapp.\+Update\+Mongo\+DB}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceimgapp_1_1UpdateMongoDB_a5bc486192c38922a65cc60e598bc9b1e}{update\+\_\+\+Mongo} (Image\+Type, Path, timestamp, user\+ID, is\+\_\+file\+\_\+flag)
+\begin{DoxyCompactList}\small\item\em upload file\textquotesingle{}s meta-\/data to mongo\+DB \end{DoxyCompactList}\item 
+def \hyperlink{namespaceimgapp_1_1UpdateMongoDB_aa239083b46ac5a0d725fa61e8068553b}{delete\+\_\+\+User\+\_\+\+Collection} (user\+ID)
+\begin{DoxyCompactList}\small\item\em drop user collection, not functioning with this imanage branch, but given here for reference issue\+: user filebrowser folders are not different \end{DoxyCompactList}\item 
+def \hyperlink{namespaceimgapp_1_1UpdateMongoDB_ac48df6f990520cda63813e27faa06095}{delete\+\_\+file\+\_\+data} (is\+\_\+file\+\_\+flag, path, user\+ID)
+\begin{DoxyCompactList}\small\item\em delete documents from mongo\+DB, used in the delete method of User\+File\+Browser\+Site class \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespaceimgapp_1_1UpdateMongoDB_a5b8548ed7b19bb6f553a7c052c778406}{Utils\+\_\+\+Object} = \hyperlink{classimgapp_1_1utils_1_1Utils}{Utils}()
+\begin{DoxyCompactList}\small\item\em Uitls object \+: instance of the model. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceimgapp_1_1UpdateMongoDB_ae23d58bb055998ec921a4a52cdc001f9}{items} = \hyperlink{namespaceimgapp_1_1UpdateMongoDB_a5bc486192c38922a65cc60e598bc9b1e}{update\+\_\+\+Mongo}(\textquotesingle{}\textquotesingle{})
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespaceimgapp_1_1UpdateMongoDB_ac48df6f990520cda63813e27faa06095}\label{namespaceimgapp_1_1UpdateMongoDB_ac48df6f990520cda63813e27faa06095}} 
+\index{imgapp\+::\+Update\+Mongo\+DB@{imgapp\+::\+Update\+Mongo\+DB}!delete\+\_\+file\+\_\+data@{delete\+\_\+file\+\_\+data}}
+\index{delete\+\_\+file\+\_\+data@{delete\+\_\+file\+\_\+data}!imgapp\+::\+Update\+Mongo\+DB@{imgapp\+::\+Update\+Mongo\+DB}}
+\subsubsection{\texorpdfstring{delete\+\_\+file\+\_\+data()}{delete\_file\_data()}}
+{\footnotesize\ttfamily def imgapp.\+Update\+Mongo\+D\+B.\+delete\+\_\+file\+\_\+data (\begin{DoxyParamCaption}\item[{}]{is\+\_\+file\+\_\+flag,  }\item[{}]{path,  }\item[{}]{user\+ID }\end{DoxyParamCaption})}
+
+
+
+delete documents from mongo\+DB, used in the delete method of User\+File\+Browser\+Site class 
+
+
+\begin{DoxyParams}{Parameters}
+{\em is\+\_\+file\+\_\+flag} & True if path to a file is passed \\
+\hline
+{\em path} & path to the file or folder to be deleted \\
+\hline
+{\em user\+ID} & primary key of the user \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespaceimgapp_1_1UpdateMongoDB_aa239083b46ac5a0d725fa61e8068553b}\label{namespaceimgapp_1_1UpdateMongoDB_aa239083b46ac5a0d725fa61e8068553b}} 
+\index{imgapp\+::\+Update\+Mongo\+DB@{imgapp\+::\+Update\+Mongo\+DB}!delete\+\_\+\+User\+\_\+\+Collection@{delete\+\_\+\+User\+\_\+\+Collection}}
+\index{delete\+\_\+\+User\+\_\+\+Collection@{delete\+\_\+\+User\+\_\+\+Collection}!imgapp\+::\+Update\+Mongo\+DB@{imgapp\+::\+Update\+Mongo\+DB}}
+\subsubsection{\texorpdfstring{delete\+\_\+\+User\+\_\+\+Collection()}{delete\_User\_Collection()}}
+{\footnotesize\ttfamily def imgapp.\+Update\+Mongo\+D\+B.\+delete\+\_\+\+User\+\_\+\+Collection (\begin{DoxyParamCaption}\item[{}]{user\+ID }\end{DoxyParamCaption})}
+
+
+
+drop user collection, not functioning with this imanage branch, but given here for reference issue\+: user filebrowser folders are not different 
+
+
+\begin{DoxyParams}{Parameters}
+{\em user\+ID} & primary key of the user whose complete database has to be deleted \begin{DoxyVerb}drop collection for current user 
+\end{DoxyVerb}
+ \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespaceimgapp_1_1UpdateMongoDB_a5bc486192c38922a65cc60e598bc9b1e}\label{namespaceimgapp_1_1UpdateMongoDB_a5bc486192c38922a65cc60e598bc9b1e}} 
+\index{imgapp\+::\+Update\+Mongo\+DB@{imgapp\+::\+Update\+Mongo\+DB}!update\+\_\+\+Mongo@{update\+\_\+\+Mongo}}
+\index{update\+\_\+\+Mongo@{update\+\_\+\+Mongo}!imgapp\+::\+Update\+Mongo\+DB@{imgapp\+::\+Update\+Mongo\+DB}}
+\subsubsection{\texorpdfstring{update\+\_\+\+Mongo()}{update\_Mongo()}}
+{\footnotesize\ttfamily def imgapp.\+Update\+Mongo\+D\+B.\+update\+\_\+\+Mongo (\begin{DoxyParamCaption}\item[{}]{Image\+Type,  }\item[{}]{Path,  }\item[{}]{timestamp,  }\item[{}]{user\+ID,  }\item[{}]{is\+\_\+file\+\_\+flag }\end{DoxyParamCaption})}
+
+
+
+upload file\textquotesingle{}s meta-\/data to mongo\+DB 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Image\+Type} & types include aerial, solar, general, for now the model is run only on aerial images \\
+\hline
+{\em Path} & path to the image to be uploaded \\
+\hline
+{\em timestamp} & timestamp of the upload \\
+\hline
+{\em user\+ID} & primary key of the user model \\
+\hline
+{\em is\+\_\+file\+\_\+flag} & True if path to a file is passed in path argument, path to a directory containing images can also be passed \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{namespaceimgapp_1_1UpdateMongoDB_ae23d58bb055998ec921a4a52cdc001f9}\label{namespaceimgapp_1_1UpdateMongoDB_ae23d58bb055998ec921a4a52cdc001f9}} 
+\index{imgapp\+::\+Update\+Mongo\+DB@{imgapp\+::\+Update\+Mongo\+DB}!items@{items}}
+\index{items@{items}!imgapp\+::\+Update\+Mongo\+DB@{imgapp\+::\+Update\+Mongo\+DB}}
+\subsubsection{\texorpdfstring{items}{items}}
+{\footnotesize\ttfamily def imgapp.\+Update\+Mongo\+D\+B.\+items = \hyperlink{namespaceimgapp_1_1UpdateMongoDB_a5bc486192c38922a65cc60e598bc9b1e}{update\+\_\+\+Mongo}(\textquotesingle{}\textquotesingle{})}
+
+\mbox{\Hypertarget{namespaceimgapp_1_1UpdateMongoDB_a5b8548ed7b19bb6f553a7c052c778406}\label{namespaceimgapp_1_1UpdateMongoDB_a5b8548ed7b19bb6f553a7c052c778406}} 
+\index{imgapp\+::\+Update\+Mongo\+DB@{imgapp\+::\+Update\+Mongo\+DB}!Utils\+\_\+\+Object@{Utils\+\_\+\+Object}}
+\index{Utils\+\_\+\+Object@{Utils\+\_\+\+Object}!imgapp\+::\+Update\+Mongo\+DB@{imgapp\+::\+Update\+Mongo\+DB}}
+\subsubsection{\texorpdfstring{Utils\+\_\+\+Object}{Utils\_Object}}
+{\footnotesize\ttfamily imgapp.\+Update\+Mongo\+D\+B.\+Utils\+\_\+\+Object = \hyperlink{classimgapp_1_1utils_1_1Utils}{Utils}()}
+
+
+
+Uitls object \+: instance of the model. 
+

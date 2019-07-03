@@ -1,0 +1,179 @@
+\hypertarget{classimgapp_1_1MongoQuery_1_1MongoQuery}{}\section{imgapp.\+Mongo\+Query.\+Mongo\+Query Class Reference}
+\label{classimgapp_1_1MongoQuery_1_1MongoQuery}\index{imgapp.\+Mongo\+Query.\+Mongo\+Query@{imgapp.\+Mongo\+Query.\+Mongo\+Query}}
+
+
+Class to query mongo\+DB.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classimgapp_1_1MongoQuery_1_1MongoQuery_a693c49ebe9e0d1f143701902a90548e2}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em constructor \end{DoxyCompactList}\item 
+def \hyperlink{classimgapp_1_1MongoQuery_1_1MongoQuery_a000e9631fd10def6744745742b76b17f}{find\+\_\+key} (self, queryfield, Config)
+\begin{DoxyCompactList}\small\item\em find the super-\/class from the object class name \end{DoxyCompactList}\item 
+def \hyperlink{classimgapp_1_1MongoQuery_1_1MongoQuery_aa9c47cc3d970874932324bfebd976f5e}{custom\+\_\+search} (self, Query\+Value, user\+ID, searchtype, create\+\_\+start, create\+\_\+till)
+\begin{DoxyCompactList}\small\item\em return images satisfying the query in the user\textquotesingle{}s own mongo collection \end{DoxyCompactList}\item 
+def \hyperlink{classimgapp_1_1MongoQuery_1_1MongoQuery_a65aa8fea8d0fdebb17091e8e8ca146d5}{Find\+Objects\+C\+O\+CO} (self, Query\+Value)
+\begin{DoxyCompactList}\small\item\em find coco images with queried images \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classimgapp_1_1MongoQuery_1_1MongoQuery_a2731bf8e3f435eaadb3cd073092eec41}{timestamps\+C\+Ol}
+\item 
+\hyperlink{classimgapp_1_1MongoQuery_1_1MongoQuery_ae16f317f2eee2ae039b7fe5528bba7a8}{settings}
+\item 
+\hyperlink{classimgapp_1_1MongoQuery_1_1MongoQuery_a6b38bf349d17270bc20067a68a881ef2}{classes}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classimgapp_1_1MongoQuery_1_1MongoQuery_ac08e4d3a758a7b20da1310fda902f891}{client} = None
+\begin{DoxyCompactList}\small\item\em Mongo Client. \end{DoxyCompactList}\item 
+\hyperlink{classimgapp_1_1MongoQuery_1_1MongoQuery_a22e0b70674f81be47d79f0f80ae6fdc0}{db} = None
+\begin{DoxyCompactList}\small\item\em Datatbase containing collection of meta-\/data of images. \end{DoxyCompactList}\item 
+\hyperlink{classimgapp_1_1MongoQuery_1_1MongoQuery_a80083eaf7f9d97d3d243cd3cd8690b7e}{Col} = None
+\begin{DoxyCompactList}\small\item\em Collection, each user has a different collection. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class to query mongo\+DB. 
+
+Query on documents in Mongo\+DB 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classimgapp_1_1MongoQuery_1_1MongoQuery_a693c49ebe9e0d1f143701902a90548e2}\label{classimgapp_1_1MongoQuery_1_1MongoQuery_a693c49ebe9e0d1f143701902a90548e2}} 
+\index{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def imgapp.\+Mongo\+Query.\+Mongo\+Query.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+constructor 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & reference to it\textquotesingle{}s own object \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classimgapp_1_1MongoQuery_1_1MongoQuery_aa9c47cc3d970874932324bfebd976f5e}\label{classimgapp_1_1MongoQuery_1_1MongoQuery_aa9c47cc3d970874932324bfebd976f5e}} 
+\index{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}!custom\+\_\+search@{custom\+\_\+search}}
+\index{custom\+\_\+search@{custom\+\_\+search}!imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}}
+\subsubsection{\texorpdfstring{custom\+\_\+search()}{custom\_search()}}
+{\footnotesize\ttfamily def imgapp.\+Mongo\+Query.\+Mongo\+Query.\+custom\+\_\+search (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{Query\+Value,  }\item[{}]{user\+ID,  }\item[{}]{searchtype,  }\item[{}]{create\+\_\+start,  }\item[{}]{create\+\_\+till }\end{DoxyParamCaption})}
+
+
+
+return images satisfying the query in the user\textquotesingle{}s own mongo collection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & reference to it\textquotesingle{}s own object \\
+\hline
+{\em Query\+Value} & objects list in the query \\
+\hline
+{\em user\+ID} & primary key of the user model instance \\
+\hline
+{\em searchtype} & check whether to query on images uploaded lastime or all the images uploaded till now \\
+\hline
+{\em create\+\_\+start} & lowerlimit of the timestamp when the image was created \\
+\hline
+{\em create\+\_\+till} & upperlimit of the timestamp when the image was created \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classimgapp_1_1MongoQuery_1_1MongoQuery_a000e9631fd10def6744745742b76b17f}\label{classimgapp_1_1MongoQuery_1_1MongoQuery_a000e9631fd10def6744745742b76b17f}} 
+\index{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}!find\+\_\+key@{find\+\_\+key}}
+\index{find\+\_\+key@{find\+\_\+key}!imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}}
+\subsubsection{\texorpdfstring{find\+\_\+key()}{find\_key()}}
+{\footnotesize\ttfamily def imgapp.\+Mongo\+Query.\+Mongo\+Query.\+find\+\_\+key (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{queryfield,  }\item[{}]{Config }\end{DoxyParamCaption})}
+
+
+
+find the super-\/class from the object class name 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & reference to it\textquotesingle{}s own object \\
+\hline
+{\em queryfield} & object class name \\
+\hline
+{\em Config} & dictionary with superclass and object mapping \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classimgapp_1_1MongoQuery_1_1MongoQuery_a65aa8fea8d0fdebb17091e8e8ca146d5}\label{classimgapp_1_1MongoQuery_1_1MongoQuery_a65aa8fea8d0fdebb17091e8e8ca146d5}} 
+\index{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}!Find\+Objects\+C\+O\+CO@{Find\+Objects\+C\+O\+CO}}
+\index{Find\+Objects\+C\+O\+CO@{Find\+Objects\+C\+O\+CO}!imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}}
+\subsubsection{\texorpdfstring{Find\+Objects\+C\+O\+C\+O()}{FindObjectsCOCO()}}
+{\footnotesize\ttfamily def imgapp.\+Mongo\+Query.\+Mongo\+Query.\+Find\+Objects\+C\+O\+CO (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{Query\+Value }\end{DoxyParamCaption})}
+
+
+
+find coco images with queried images 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & reference to it\textquotesingle{}s own object \\
+\hline
+{\em Query\+Value} & list of objects in the query \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classimgapp_1_1MongoQuery_1_1MongoQuery_a6b38bf349d17270bc20067a68a881ef2}\label{classimgapp_1_1MongoQuery_1_1MongoQuery_a6b38bf349d17270bc20067a68a881ef2}} 
+\index{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}!classes@{classes}}
+\index{classes@{classes}!imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}}
+\subsubsection{\texorpdfstring{classes}{classes}}
+{\footnotesize\ttfamily imgapp.\+Mongo\+Query.\+Mongo\+Query.\+classes}
+
+\mbox{\Hypertarget{classimgapp_1_1MongoQuery_1_1MongoQuery_ac08e4d3a758a7b20da1310fda902f891}\label{classimgapp_1_1MongoQuery_1_1MongoQuery_ac08e4d3a758a7b20da1310fda902f891}} 
+\index{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}!client@{client}}
+\index{client@{client}!imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}}
+\subsubsection{\texorpdfstring{client}{client}}
+{\footnotesize\ttfamily imgapp.\+Mongo\+Query.\+Mongo\+Query.\+client = None\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Mongo Client. 
+
+\mbox{\Hypertarget{classimgapp_1_1MongoQuery_1_1MongoQuery_a80083eaf7f9d97d3d243cd3cd8690b7e}\label{classimgapp_1_1MongoQuery_1_1MongoQuery_a80083eaf7f9d97d3d243cd3cd8690b7e}} 
+\index{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}!Col@{Col}}
+\index{Col@{Col}!imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}}
+\subsubsection{\texorpdfstring{Col}{Col}}
+{\footnotesize\ttfamily imgapp.\+Mongo\+Query.\+Mongo\+Query.\+Col = None\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Collection, each user has a different collection. 
+
+\mbox{\Hypertarget{classimgapp_1_1MongoQuery_1_1MongoQuery_a22e0b70674f81be47d79f0f80ae6fdc0}\label{classimgapp_1_1MongoQuery_1_1MongoQuery_a22e0b70674f81be47d79f0f80ae6fdc0}} 
+\index{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}!db@{db}}
+\index{db@{db}!imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}}
+\subsubsection{\texorpdfstring{db}{db}}
+{\footnotesize\ttfamily imgapp.\+Mongo\+Query.\+Mongo\+Query.\+db = None\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Datatbase containing collection of meta-\/data of images. 
+
+\mbox{\Hypertarget{classimgapp_1_1MongoQuery_1_1MongoQuery_ae16f317f2eee2ae039b7fe5528bba7a8}\label{classimgapp_1_1MongoQuery_1_1MongoQuery_ae16f317f2eee2ae039b7fe5528bba7a8}} 
+\index{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}!settings@{settings}}
+\index{settings@{settings}!imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}}
+\subsubsection{\texorpdfstring{settings}{settings}}
+{\footnotesize\ttfamily imgapp.\+Mongo\+Query.\+Mongo\+Query.\+settings}
+
+\mbox{\Hypertarget{classimgapp_1_1MongoQuery_1_1MongoQuery_a2731bf8e3f435eaadb3cd073092eec41}\label{classimgapp_1_1MongoQuery_1_1MongoQuery_a2731bf8e3f435eaadb3cd073092eec41}} 
+\index{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}!timestamps\+C\+Ol@{timestamps\+C\+Ol}}
+\index{timestamps\+C\+Ol@{timestamps\+C\+Ol}!imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query@{imgapp\+::\+Mongo\+Query\+::\+Mongo\+Query}}
+\subsubsection{\texorpdfstring{timestamps\+C\+Ol}{timestampsCOl}}
+{\footnotesize\ttfamily imgapp.\+Mongo\+Query.\+Mongo\+Query.\+timestamps\+C\+Ol}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+imgapp/\hyperlink{MongoQuery_8py}{Mongo\+Query.\+py}\end{DoxyCompactItemize}

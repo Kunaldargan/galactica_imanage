@@ -1,3 +1,7 @@
+## @package MongoQuery
+# 
+# module to query on mongoDB
+
 import pymongo
 from pprint import pprint
 import json
@@ -9,7 +13,9 @@ import os
 
 
 
-# especially used for coco; find coco image id and append it to imageids
+## specially used for coco; find coco image id and append it to imageids
+# @param image  image meta-data in json format
+# @param imageids dictionary of image ids and their path
 def appendID(image, imageids) :
     name = image['item']['File']['FileName']
     index = 0
@@ -23,11 +29,19 @@ def appendID(image, imageids) :
     imageids.update({id : path})
     return
 
-
+## Class to query mongoDB
+#
+# Query on documents in MongoDB
 class MongoQuery :
+    ## Mongo Client
     client = None
+    ## Datatbase containing collection of meta-data of images 
     db = None
+    ## Collection, each user has a different collection
     Col = None
+
+    ## constructor
+    # @param self reference to it's own object
     def __init__(self):
         self.client = pymongo.MongoClient(MONGO_CONNECTION_URL)
         self.db = self.client[MONGO_DATABASE]
@@ -40,6 +54,10 @@ class MongoQuery :
 
         return
 
+    ## find the super-class from the object class name 
+    # @param self reference to it's own object
+    # @param queryfield object class name
+    # @param Config dictionary with superclass and object mapping   
     def find_key(self,queryfield,Config) :
         keys=[]
         for key,value in Config.items() :
@@ -47,12 +65,17 @@ class MongoQuery :
                 keys.append(key)
         return keys
         
-
+    ## return images satisfying the query in the user's own mongo collection
+    # @param self reference to it's own object
+    # @param QueryValue objects list in the query
+    # @param userID primary key of the user model instance 
+    # @param searchtype check whether to query on images uploaded lastime or all the images uploaded till now
+    # @param create_start lowerlimit of the timestamp when the image was created 
+    # @param create_till  upperlimit of the timestamp when the image was created
     def custom_search(self,QueryValue,userID,searchtype,create_start,create_till):
         self.Col = self.db[str(userID)]
         queryDict = {"$and" : []}
         imgIds = {}
-        
        
         for obj in QueryValue:
             if obj in self.classes:
@@ -92,20 +115,20 @@ class MongoQuery :
             for doc in timestamp_docs :
                 queryDict["$and"][-1]["$or"].append( { "item.File.TimeStamp" : doc['time'] } )
 
-        # the create date filter 
+        # the create date filter, both lower and upper limit required
         if (create_start!="" and create_till!="") :
             createdate = 'item.EXIF.CreateDate'
             queryDict["$and"].append( { createdate : {"$gte" : create_start} } )
             queryDict["$and"].append( { createdate : {"$lte" : create_till} } )
 
-        print(queryDict)
+        # print(queryDict)
         cursor = self.Col.find(queryDict)
         data = list(cursor)
         
         for item in data:
             sourcefile = item['item']['SourceFile']
             file = item['item']['File']['FileName']
-            #print(item["item"]["Objects"])
+
             img=cv2.imread(sourcefile)
             out_img = img
             objects = item["item"]["Objects"]
@@ -125,7 +148,9 @@ class MongoQuery :
 
    
 
-    # find objects in coco images
+    ## find coco images with queried images 
+    # @param self reference to it's own object
+    # @param QueryValue list of objects in the query
     def FindObjectsCOCO(self,QueryValue) :
         self.Col = self.db['COCO']
         with open("imgapp/categories.txt",'r') as f:

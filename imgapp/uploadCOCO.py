@@ -1,8 +1,13 @@
+## upload COCO metadata separately( not being used in the app )
+#
+# to be run separatly, not with the djnago 
 import json
 from ExtractExif import Extract_Exif
 from pprint import pprint
 from pymongo import MongoClient
 
+## return imagename out of the image id
+# @param imgid image ID 
 def make_imgname(imgid) :
     l = len(imgid)
     n = 16 - l
@@ -12,11 +17,16 @@ def make_imgname(imgid) :
     imgname = imgname + imgid
     return imgname
 
+## returns category info in a dictionary using the category ID
+# @param category dictionary containing info of all the categories
 def getCat_info(category,cat_id) :
     for val in category :
         if (val['id']==cat_id) :
             return val
 
+## map all objects in a image and returns dictionary with image name as the key and objects list as the value
+# @param annotations annotation list
+# @param category  dictionary with category info
 def ListObjects(annotations_list,category) :
     img_dict = { }
     for i in range(0,len(annotations_list)) :
@@ -60,16 +70,15 @@ def ListObjects(annotations_list,category) :
                 else :
                     list_valdict = cat_dict[catname]
                     list_valdict.append(val_dict)
-
-
-            
+ 
     return img_dict
 
-
-with open('instances_val2017.json') as json_file :
-    data = json.load(json_file)
-    annotationsList = data["annotations"]
-    category = data["categories"]
+## call this fucntion to upload images, Note : change the path to the directory with COCO images 
+def uploadCOCO() :
+    with open('instances_val2017.json') as json_file :
+        data = json.load(json_file)
+        annotationsList = data["annotations"]
+        category = data["categories"]
 
     # category_dict = {}
 
@@ -81,10 +90,10 @@ with open('instances_val2017.json') as json_file :
     #         category_dict[key].append(cat['name'])
     # print(category_dict)
     imgdict = ListObjects(annotationsList,category)
-   
+
     Ext_Exif = Extract_Exif()
     NewExtAll = []
-    ExtALL = Ext_Exif.Extract_MetaData('/home/galactica/Downloads/val2017')
+    ExtALL = Ext_Exif.Extract_MetaData('/home/galactica/Downloads/val2017') # CHANGE THE PATH HERE
     
     for imgname in imgdict.keys() :
         meta = ExtALL[imgname]
@@ -97,4 +106,4 @@ with open('instances_val2017.json') as json_file :
     Col = db['COCO']
     
     Col.insert_many(NewExtAll)
-   
+    

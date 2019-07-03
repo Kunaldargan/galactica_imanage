@@ -1,3 +1,7 @@
+## @package UpdateMongoDB
+# 
+# utilities to update documents in MongoDB
+
 from pymongo import MongoClient
 from .ExtractExif import Extract_Exif
 from copy import deepcopy
@@ -8,17 +12,17 @@ import shutil
 import os
 from .utils import Utils
 
+## Uitls object : instance of the model
 Utils_Object = Utils()
 
-
-# Upload metadata of the images to the mongoDB
-# Also, apply the object detection model to detect the objects and get the bbox coordinates 
-# Upload these bbox coordinates with the image's metadata
-def update_Mongo(DataSetName, ImageType, Path, timestamp, userID, is_file_flag) :
-    """
-    Upload files to mongodb
-    """
-
+## upload file's meta-data to mongoDB
+# @param ImageType types include aerial, solar, general, for now the model is run only on aerial images
+# @param Path path to the image to be uploaded
+# @param timestamp timestamp of the upload 
+# @param userID primary key of the user model 
+# @param is_file_flag True if path to a file is passed in path argument, path to a directory containing images can also be passed
+def update_Mongo(ImageType, Path, timestamp, userID, is_file_flag) :
+    
     # extract exif data
     Ext_Exif = Extract_Exif()
     Exif_All = Ext_Exif.Extract_MetaData(Path, is_file_flag)
@@ -31,8 +35,12 @@ def update_Mongo(DataSetName, ImageType, Path, timestamp, userID, is_file_flag) 
 
     # Upload timestamps and dataset name 
     loginCOL = db['login']
-    timestamp_doc = {"time" : timestamp , "userID" : userID , "directory" : os.path.split(Path)[0] , "path" : Path}
-
+    timestamp_doc ={}
+    if (is_file_flag==True) :
+        timestamp_doc = {"time" : timestamp , "userID" : userID , "directory" : os.path.split(Path)[0] , "path" : Path}
+    else :
+        timestamp_doc = {"time" : timestamp , "userID" : userID , "directory" : Path , "path" : Path}
+        
     # if timestamp record doesn't already exist in the loginCOL then upload it to mongoDB
     if (loginCOL.find_one(timestamp_doc)== None) :
         loginCOL.insert_one(timestamp_doc)
@@ -89,7 +97,9 @@ def update_Mongo(DataSetName, ImageType, Path, timestamp, userID, is_file_flag) 
     # upload all the image's metadata
     Exif_col.insert_many(imgitems)
 
-
+## drop user collection, not functioning with this imanage branch, but given here for reference
+# issue: user filebrowser folders are not different 
+# @param userID primary key of the user whose complete database has to be deleted
 def delete_User_Collection(userID) :
     """
     drop collection for current user 
@@ -124,13 +134,12 @@ def delete_User_Collection(userID) :
     return 0
 
 
-
+## delete documents from mongoDB, used in the delete method of UserFileBrowserSite class
+# @param is_file_flag True if path to a file is passed 
+# @param path path to the file or folder to be deleted
+# @param userID primary key of the user 
 def delete_file_data(is_file_flag, path, userID) :
-    """
-    delete file metadata from mongoDB
-    """
     
-
     client = MongoClient(MONGO_CONNECTION_URL)
     db = client[MONGO_DATABASE]
     

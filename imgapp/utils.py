@@ -1,3 +1,7 @@
+## @package utils
+#
+# all COCO and darknet model functionalities 
+
 import os
 import cv2
 import json
@@ -13,14 +17,24 @@ from pydarknet import Detector as Det
 from pydarknet import Image as darknetImageWrapper
 from galactica_imanage.settings import BASE_DIR
 
+## color mapping for bounding boxes
 color_map = {}
+
 
 with open(os.path.join(BASE_DIR,'App_Settings.json')) as f :
 		settings = json.load(f)
+
+## annotations file path used by coco
 annfile = settings["coco"]["ann_file"]
+
+## COCO model instance
 coco = COCO(annfile)
+
+## Category info
 Cat = coco.loadCats(coco.getCatIds())
 
+## create color mapping with respect ot classes
+# @param names_file names file path
 def set_color(names_file):
 	with open(names_file,'r') as c:
 		classes = c.readlines()
@@ -35,12 +49,18 @@ def set_color(names_file):
 		j = i % m
 		color_map[classes[i].rstrip()] = webcolors.name_to_rgb(colors[j])
 
+## returns RGB values depending on class label
+# @param label name of the class
 def get_color(label):
 	r = color_map[label].red
 	g = color_map[label].green
 	b = color_map[label].blue
 	return((r,g,b)) #Return color
 
+## draw bounding boxes
+# @param img image matrix
+# @param bounds coordinates of bbox
+# @param label name of the class
 def draw_bbox(img, bounds, label) :
 	x, y, w, h = bounds
 	color = get_color(label)
@@ -56,6 +76,9 @@ def draw_bbox(img, bounds, label) :
 	cv2.putText(img, label, (int(text_offset_x), int(text_offset_y)), cv2.FONT_HERSHEY_PLAIN, fontScale=1, color=(255,255,255), thickness=1, lineType=cv2.LINE_AA)
 	return(img)
 
+## make object annotations and save the resulting image, uses COCO model
+# @param imgIds image IDs
+# @param cat_names queried category names
 def save_annotatedFile(imgIds,cat_names) :
 
 	catIds = coco.getCatIds(catNms=cat_names)
@@ -72,23 +95,25 @@ def save_annotatedFile(imgIds,cat_names) :
 		plt.close()
 		imagesLoaded+=1
 
-
+## darknet model class 
+#
+# includes all darknet model functionalities  
 class Utils  :
 	
+	## constructor
+	# @param self reference to it's own object
 	def __init__(self):
-		"""
-			Initialize : darknet model and coco_api
-		"""
+	
 		self.net = Det(bytes(settings["darknet"]["cfg"], encoding="utf-8"),bytes(settings["darknet"]["weights"], encoding="utf-8"), 0, bytes(settings["darknet"]["obj"],encoding="utf-8"))
 		self.detection_threshold = settings["darknet"]["threshold"]
 		set_color(settings["darknet"]["names"])
 		return
 
+	## Wrap around image in darknet format and forward pass
+	# @param self reference to it's own object
+	# @param img image matrix 
 	def get_boundingBox(self, img) :
-		"""
-			Wrap around image in darknet format and forward pass
-		"""
-
+		
 		detections = []
 		dark_frame = darknetImageWrapper(img)
 		start_time = time.time()

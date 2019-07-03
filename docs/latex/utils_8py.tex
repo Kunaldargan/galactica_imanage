@@ -1,0 +1,38 @@
+\hypertarget{utils_8py}{}\section{imgapp/utils.py File Reference}
+\label{utils_8py}\index{imgapp/utils.\+py@{imgapp/utils.\+py}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classimgapp_1_1utils_1_1Utils}{imgapp.\+utils.\+Utils}
+\begin{DoxyCompactList}\small\item\em darknet model class \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespaceimgapp_1_1utils}{imgapp.\+utils}
+\item 
+ \hyperlink{namespaceutils}{utils}
+\begin{DoxyCompactList}\small\item\em all C\+O\+CO and darknet model functionalities \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceimgapp_1_1utils_a6d744ddd54588b6d14e6dc10b504e5c3}{imgapp.\+utils.\+set\+\_\+color} (names\+\_\+file)
+\begin{DoxyCompactList}\small\item\em create color mapping with respect ot classes \end{DoxyCompactList}\item 
+def \hyperlink{namespaceimgapp_1_1utils_a468cc459f9ea6c9c150db800f5d76212}{imgapp.\+utils.\+get\+\_\+color} (label)
+\begin{DoxyCompactList}\small\item\em returns R\+GB values depending on class label \end{DoxyCompactList}\item 
+def \hyperlink{namespaceimgapp_1_1utils_a7e2ce0fe32d261f7a8c57030029aa401}{imgapp.\+utils.\+draw\+\_\+bbox} (img, bounds, label)
+\begin{DoxyCompactList}\small\item\em draw bounding boxes \end{DoxyCompactList}\item 
+def \hyperlink{namespaceimgapp_1_1utils_ab0143c8cde7f9ee033d14b55642640f4}{imgapp.\+utils.\+save\+\_\+annotated\+File} (img\+Ids, cat\+\_\+names)
+\begin{DoxyCompactList}\small\item\em make object annotations and save the resulting image, uses C\+O\+CO model \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+dictionary \hyperlink{namespaceimgapp_1_1utils_aef6c0a613ef435057531c3e15d7ee228}{imgapp.\+utils.\+color\+\_\+map} = \{\}
+\begin{DoxyCompactList}\small\item\em color mapping for bounding boxes \end{DoxyCompactList}\item 
+\hyperlink{namespaceimgapp_1_1utils_ab8f7f09b0a834029cdce936a10744e75}{imgapp.\+utils.\+settings} = json.\+load(f)
+\item 
+\hyperlink{namespaceimgapp_1_1utils_a8e182872d7fd166b733945c31c6e75b0}{imgapp.\+utils.\+annfile} = settings\mbox{[}\char`\"{}coco\char`\"{}\mbox{]}\mbox{[}\char`\"{}ann\+\_\+file\char`\"{}\mbox{]}
+\begin{DoxyCompactList}\small\item\em annotations file path used by coco \end{DoxyCompactList}\item 
+\hyperlink{namespaceimgapp_1_1utils_a019aef0229f11d0fce25f09543158b1d}{imgapp.\+utils.\+coco} = C\+O\+CO(annfile)
+\begin{DoxyCompactList}\small\item\em C\+O\+CO model instance. \end{DoxyCompactList}\item 
+\hyperlink{namespaceimgapp_1_1utils_a76721855ae19d74f938f4a234ccf2fa4}{imgapp.\+utils.\+Cat} = coco.\+load\+Cats(coco.\+get\+Cat\+Ids())
+\begin{DoxyCompactList}\small\item\em Category info. \end{DoxyCompactList}\end{DoxyCompactItemize}

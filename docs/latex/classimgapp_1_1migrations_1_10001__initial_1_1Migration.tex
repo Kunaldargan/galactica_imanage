@@ -1,0 +1,76 @@
+\hypertarget{classimgapp_1_1migrations_1_10001__initial_1_1Migration}{}\section{imgapp.\+migrations.0001\+\_\+initial.Migration Class Reference}
+\label{classimgapp_1_1migrations_1_10001__initial_1_1Migration}\index{imgapp.\+migrations.\+0001\+\_\+initial.\+Migration@{imgapp.\+migrations.\+0001\+\_\+initial.\+Migration}}
+
+
+Inheritance diagram for imgapp.\+migrations.0001\+\_\+initial.Migration\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=200pt]{classimgapp_1_1migrations_1_10001__initial_1_1Migration__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for imgapp.\+migrations.0001\+\_\+initial.Migration\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=200pt]{classimgapp_1_1migrations_1_10001__initial_1_1Migration__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classimgapp_1_1migrations_1_10001__initial_1_1Migration_a9c4795f13c3f1ba0324cabaf163417e5}{initial} = True
+\item 
+list \hyperlink{classimgapp_1_1migrations_1_10001__initial_1_1Migration_aa54c815fe0f4d4a5d6f1e7303a9843fc}{dependencies}
+\item 
+list \hyperlink{classimgapp_1_1migrations_1_10001__initial_1_1Migration_ad2e7a56581e2741b53b78c4b28663ff6}{operations}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classimgapp_1_1migrations_1_10001__initial_1_1Migration_aa54c815fe0f4d4a5d6f1e7303a9843fc}\label{classimgapp_1_1migrations_1_10001__initial_1_1Migration_aa54c815fe0f4d4a5d6f1e7303a9843fc}} 
+\index{imgapp\+::migrations\+::0001\+\_\+initial\+::\+Migration@{imgapp\+::migrations\+::0001\+\_\+initial\+::\+Migration}!dependencies@{dependencies}}
+\index{dependencies@{dependencies}!imgapp\+::migrations\+::0001\+\_\+initial\+::\+Migration@{imgapp\+::migrations\+::0001\+\_\+initial\+::\+Migration}}
+\subsubsection{\texorpdfstring{dependencies}{dependencies}}
+{\footnotesize\ttfamily list imgapp.\+migrations.\+0001\+\_\+initial.\+Migration.\+dependencies\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  [
+        migrations.swappable\_dependency(settings.AUTH\_USER\_MODEL),
+    ]
+\end{DoxyCode}
+\mbox{\Hypertarget{classimgapp_1_1migrations_1_10001__initial_1_1Migration_a9c4795f13c3f1ba0324cabaf163417e5}\label{classimgapp_1_1migrations_1_10001__initial_1_1Migration_a9c4795f13c3f1ba0324cabaf163417e5}} 
+\index{imgapp\+::migrations\+::0001\+\_\+initial\+::\+Migration@{imgapp\+::migrations\+::0001\+\_\+initial\+::\+Migration}!initial@{initial}}
+\index{initial@{initial}!imgapp\+::migrations\+::0001\+\_\+initial\+::\+Migration@{imgapp\+::migrations\+::0001\+\_\+initial\+::\+Migration}}
+\subsubsection{\texorpdfstring{initial}{initial}}
+{\footnotesize\ttfamily bool imgapp.\+migrations.\+0001\+\_\+initial.\+Migration.\+initial = True\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classimgapp_1_1migrations_1_10001__initial_1_1Migration_ad2e7a56581e2741b53b78c4b28663ff6}\label{classimgapp_1_1migrations_1_10001__initial_1_1Migration_ad2e7a56581e2741b53b78c4b28663ff6}} 
+\index{imgapp\+::migrations\+::0001\+\_\+initial\+::\+Migration@{imgapp\+::migrations\+::0001\+\_\+initial\+::\+Migration}!operations@{operations}}
+\index{operations@{operations}!imgapp\+::migrations\+::0001\+\_\+initial\+::\+Migration@{imgapp\+::migrations\+::0001\+\_\+initial\+::\+Migration}}
+\subsubsection{\texorpdfstring{operations}{operations}}
+{\footnotesize\ttfamily list imgapp.\+migrations.\+0001\+\_\+initial.\+Migration.\+operations\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  [
+        migrations.CreateModel(
+            name=\textcolor{stringliteral}{'Profile'},
+            fields=[
+                (\textcolor{stringliteral}{'id'}, models.AutoField(auto\_created=\textcolor{keyword}{True}, primary\_key=\textcolor{keyword}{True}, serialize=\textcolor{keyword}{False}, verbose\_name=\textcolor{stringliteral}{
+      'ID'})),
+                (\textcolor{stringliteral}{'company'}, models.CharField(max\_length=50)),
+                (\textcolor{stringliteral}{'user'}, models.OneToOneField(on\_delete=django.db.models.deletion.CASCADE, to=
+      settings.AUTH\_USER\_MODEL)),
+            ],
+        ),
+    ]
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+imgapp/migrations/\hyperlink{0001__initial_8py}{0001\+\_\+initial.\+py}\end{DoxyCompactItemize}

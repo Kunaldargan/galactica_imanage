@@ -1,0 +1,149 @@
+\hypertarget{namespaceimgapp_1_1utils}{}\section{imgapp.\+utils Namespace Reference}
+\label{namespaceimgapp_1_1utils}\index{imgapp.\+utils@{imgapp.\+utils}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classimgapp_1_1utils_1_1Utils}{Utils}
+\begin{DoxyCompactList}\small\item\em darknet model class \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceimgapp_1_1utils_a6d744ddd54588b6d14e6dc10b504e5c3}{set\+\_\+color} (names\+\_\+file)
+\begin{DoxyCompactList}\small\item\em create color mapping with respect ot classes \end{DoxyCompactList}\item 
+def \hyperlink{namespaceimgapp_1_1utils_a468cc459f9ea6c9c150db800f5d76212}{get\+\_\+color} (label)
+\begin{DoxyCompactList}\small\item\em returns R\+GB values depending on class label \end{DoxyCompactList}\item 
+def \hyperlink{namespaceimgapp_1_1utils_a7e2ce0fe32d261f7a8c57030029aa401}{draw\+\_\+bbox} (img, bounds, label)
+\begin{DoxyCompactList}\small\item\em draw bounding boxes \end{DoxyCompactList}\item 
+def \hyperlink{namespaceimgapp_1_1utils_ab0143c8cde7f9ee033d14b55642640f4}{save\+\_\+annotated\+File} (img\+Ids, cat\+\_\+names)
+\begin{DoxyCompactList}\small\item\em make object annotations and save the resulting image, uses C\+O\+CO model \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+dictionary \hyperlink{namespaceimgapp_1_1utils_aef6c0a613ef435057531c3e15d7ee228}{color\+\_\+map} = \{\}
+\begin{DoxyCompactList}\small\item\em color mapping for bounding boxes \end{DoxyCompactList}\item 
+\hyperlink{namespaceimgapp_1_1utils_ab8f7f09b0a834029cdce936a10744e75}{settings} = json.\+load(f)
+\item 
+\hyperlink{namespaceimgapp_1_1utils_a8e182872d7fd166b733945c31c6e75b0}{annfile} = \hyperlink{namespaceimgapp_1_1utils_ab8f7f09b0a834029cdce936a10744e75}{settings}\mbox{[}\char`\"{}coco\char`\"{}\mbox{]}\mbox{[}\char`\"{}ann\+\_\+file\char`\"{}\mbox{]}
+\begin{DoxyCompactList}\small\item\em annotations file path used by coco \end{DoxyCompactList}\item 
+\hyperlink{namespaceimgapp_1_1utils_a019aef0229f11d0fce25f09543158b1d}{coco} = C\+O\+CO(\hyperlink{namespaceimgapp_1_1utils_a8e182872d7fd166b733945c31c6e75b0}{annfile})
+\begin{DoxyCompactList}\small\item\em C\+O\+CO model instance. \end{DoxyCompactList}\item 
+\hyperlink{namespaceimgapp_1_1utils_a76721855ae19d74f938f4a234ccf2fa4}{Cat} = coco.\+load\+Cats(coco.\+get\+Cat\+Ids())
+\begin{DoxyCompactList}\small\item\em Category info. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespaceimgapp_1_1utils_a7e2ce0fe32d261f7a8c57030029aa401}\label{namespaceimgapp_1_1utils_a7e2ce0fe32d261f7a8c57030029aa401}} 
+\index{imgapp\+::utils@{imgapp\+::utils}!draw\+\_\+bbox@{draw\+\_\+bbox}}
+\index{draw\+\_\+bbox@{draw\+\_\+bbox}!imgapp\+::utils@{imgapp\+::utils}}
+\subsubsection{\texorpdfstring{draw\+\_\+bbox()}{draw\_bbox()}}
+{\footnotesize\ttfamily def imgapp.\+utils.\+draw\+\_\+bbox (\begin{DoxyParamCaption}\item[{}]{img,  }\item[{}]{bounds,  }\item[{}]{label }\end{DoxyParamCaption})}
+
+
+
+draw bounding boxes 
+
+
+\begin{DoxyParams}{Parameters}
+{\em img} & image matrix \\
+\hline
+{\em bounds} & coordinates of bbox \\
+\hline
+{\em label} & name of the class \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespaceimgapp_1_1utils_a468cc459f9ea6c9c150db800f5d76212}\label{namespaceimgapp_1_1utils_a468cc459f9ea6c9c150db800f5d76212}} 
+\index{imgapp\+::utils@{imgapp\+::utils}!get\+\_\+color@{get\+\_\+color}}
+\index{get\+\_\+color@{get\+\_\+color}!imgapp\+::utils@{imgapp\+::utils}}
+\subsubsection{\texorpdfstring{get\+\_\+color()}{get\_color()}}
+{\footnotesize\ttfamily def imgapp.\+utils.\+get\+\_\+color (\begin{DoxyParamCaption}\item[{}]{label }\end{DoxyParamCaption})}
+
+
+
+returns R\+GB values depending on class label 
+
+
+\begin{DoxyParams}{Parameters}
+{\em label} & name of the class \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespaceimgapp_1_1utils_ab0143c8cde7f9ee033d14b55642640f4}\label{namespaceimgapp_1_1utils_ab0143c8cde7f9ee033d14b55642640f4}} 
+\index{imgapp\+::utils@{imgapp\+::utils}!save\+\_\+annotated\+File@{save\+\_\+annotated\+File}}
+\index{save\+\_\+annotated\+File@{save\+\_\+annotated\+File}!imgapp\+::utils@{imgapp\+::utils}}
+\subsubsection{\texorpdfstring{save\+\_\+annotated\+File()}{save\_annotatedFile()}}
+{\footnotesize\ttfamily def imgapp.\+utils.\+save\+\_\+annotated\+File (\begin{DoxyParamCaption}\item[{}]{img\+Ids,  }\item[{}]{cat\+\_\+names }\end{DoxyParamCaption})}
+
+
+
+make object annotations and save the resulting image, uses C\+O\+CO model 
+
+
+\begin{DoxyParams}{Parameters}
+{\em img\+Ids} & image I\+Ds \\
+\hline
+{\em cat\+\_\+names} & queried category names \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespaceimgapp_1_1utils_a6d744ddd54588b6d14e6dc10b504e5c3}\label{namespaceimgapp_1_1utils_a6d744ddd54588b6d14e6dc10b504e5c3}} 
+\index{imgapp\+::utils@{imgapp\+::utils}!set\+\_\+color@{set\+\_\+color}}
+\index{set\+\_\+color@{set\+\_\+color}!imgapp\+::utils@{imgapp\+::utils}}
+\subsubsection{\texorpdfstring{set\+\_\+color()}{set\_color()}}
+{\footnotesize\ttfamily def imgapp.\+utils.\+set\+\_\+color (\begin{DoxyParamCaption}\item[{}]{names\+\_\+file }\end{DoxyParamCaption})}
+
+
+
+create color mapping with respect ot classes 
+
+
+\begin{DoxyParams}{Parameters}
+{\em names\+\_\+file} & names file path \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{namespaceimgapp_1_1utils_a8e182872d7fd166b733945c31c6e75b0}\label{namespaceimgapp_1_1utils_a8e182872d7fd166b733945c31c6e75b0}} 
+\index{imgapp\+::utils@{imgapp\+::utils}!annfile@{annfile}}
+\index{annfile@{annfile}!imgapp\+::utils@{imgapp\+::utils}}
+\subsubsection{\texorpdfstring{annfile}{annfile}}
+{\footnotesize\ttfamily imgapp.\+utils.\+annfile = \hyperlink{namespaceimgapp_1_1utils_ab8f7f09b0a834029cdce936a10744e75}{settings}\mbox{[}\char`\"{}coco\char`\"{}\mbox{]}\mbox{[}\char`\"{}ann\+\_\+file\char`\"{}\mbox{]}}
+
+
+
+annotations file path used by coco 
+
+\mbox{\Hypertarget{namespaceimgapp_1_1utils_a76721855ae19d74f938f4a234ccf2fa4}\label{namespaceimgapp_1_1utils_a76721855ae19d74f938f4a234ccf2fa4}} 
+\index{imgapp\+::utils@{imgapp\+::utils}!Cat@{Cat}}
+\index{Cat@{Cat}!imgapp\+::utils@{imgapp\+::utils}}
+\subsubsection{\texorpdfstring{Cat}{Cat}}
+{\footnotesize\ttfamily imgapp.\+utils.\+Cat = coco.\+load\+Cats(coco.\+get\+Cat\+Ids())}
+
+
+
+Category info. 
+
+\mbox{\Hypertarget{namespaceimgapp_1_1utils_a019aef0229f11d0fce25f09543158b1d}\label{namespaceimgapp_1_1utils_a019aef0229f11d0fce25f09543158b1d}} 
+\index{imgapp\+::utils@{imgapp\+::utils}!coco@{coco}}
+\index{coco@{coco}!imgapp\+::utils@{imgapp\+::utils}}
+\subsubsection{\texorpdfstring{coco}{coco}}
+{\footnotesize\ttfamily imgapp.\+utils.\+coco = C\+O\+CO(\hyperlink{namespaceimgapp_1_1utils_a8e182872d7fd166b733945c31c6e75b0}{annfile})}
+
+
+
+C\+O\+CO model instance. 
+
+\mbox{\Hypertarget{namespaceimgapp_1_1utils_aef6c0a613ef435057531c3e15d7ee228}\label{namespaceimgapp_1_1utils_aef6c0a613ef435057531c3e15d7ee228}} 
+\index{imgapp\+::utils@{imgapp\+::utils}!color\+\_\+map@{color\+\_\+map}}
+\index{color\+\_\+map@{color\+\_\+map}!imgapp\+::utils@{imgapp\+::utils}}
+\subsubsection{\texorpdfstring{color\+\_\+map}{color\_map}}
+{\footnotesize\ttfamily dictionary imgapp.\+utils.\+color\+\_\+map = \{\}}
+
+
+
+color mapping for bounding boxes 
+
+\mbox{\Hypertarget{namespaceimgapp_1_1utils_ab8f7f09b0a834029cdce936a10744e75}\label{namespaceimgapp_1_1utils_ab8f7f09b0a834029cdce936a10744e75}} 
+\index{imgapp\+::utils@{imgapp\+::utils}!settings@{settings}}
+\index{settings@{settings}!imgapp\+::utils@{imgapp\+::utils}}
+\subsubsection{\texorpdfstring{settings}{settings}}
+{\footnotesize\ttfamily imgapp.\+utils.\+settings = json.\+load(f)}
+
