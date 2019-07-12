@@ -181,6 +181,8 @@ STATIC_ROOT = os.path.join(BASE_DIR,"imgapp","static")
 # Main FileBrowser Directory. Relative to site.storage.location.
 # DO NOT USE A SLASH AT THE BEGINNING, DO NOT FORGET THE TRAILING SLASH AT THE END.
 FILEBROWSER_DIRECTORY = getattr(settings, "FILEBROWSER_DIRECTORY", 'uploads/')
+FILEBROWSER_MEDIA_ROOT = os.path.join(BASE_DIR,FILEBROWSER_DIRECTORY)
+FILEBROWSER_MEDIA_URL = FILEBROWSER_DIRECTORY
 
 # EXTENSIONS AND FORMATS
 # Allowed Extensions for File Upload. Lower case is important.

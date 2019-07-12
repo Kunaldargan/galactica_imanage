@@ -2,6 +2,7 @@
 
 from django.urls import path
 from . import views
+from galactica_imanage.settings import FILEBROWSER_DIRECTORY
 
 ## urlpatterns 
 urlpatterns = [
@@ -13,4 +14,6 @@ urlpatterns = [
     path('deleteCollections/',views.delete,name='dropcollection'),
     path('signup/',views.SignUp_Form,name='signup'),
     path('about/',views.description,name='about'),
+    # view filebrowser image 
+    path(FILEBROWSER_DIRECTORY+'.',views.viewImage,name='viewImage'),
 ]

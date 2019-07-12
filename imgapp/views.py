@@ -4,7 +4,7 @@
 
 from django.shortcuts import render, render_to_response,HttpResponse
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
-from django.urls import reverse
+from django.urls import reverse, resolve
 import datetime
 import os
 from .MongoQuery import MongoQuery
@@ -196,3 +196,13 @@ def description(request) :
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('admin:login'))
     return render(request,'imgapp/description.html',{})
+
+## filebrowser view image
+# @param request view request
+def viewImage(request) :
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('admin:login'))
+    current_url = request.path_info
+    path, filename = os.path.split(current_url)
+    print(filename)
+    return HttpResponse("here")

@@ -24,4 +24,6 @@ urlpatterns = [
     path('admin/filebrowser/', site.urls),
     path('admin/', admin.site.urls),
     path('admin/imgapp/', include('imgapp.urls')),
+    # handle view image
+    path('admin/filebrowser/browse/',include('imgapp.urls')),
 ]
