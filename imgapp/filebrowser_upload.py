@@ -28,7 +28,7 @@ import datetime
 
 
 ## Override filebrowser site functionalities
-class UserFileBrowserSite(FileBrowserSite):
+class userFileBrowserSite(FileBrowserSite):
     
     ## upload timestamp, set when upload page is loaded
     timestamp = ""
@@ -159,7 +159,7 @@ class UserFileBrowserSite(FileBrowserSite):
 storage = DefaultStorage()
 
 # imgapp FileBrowser site
-site = UserFileBrowserSite(name='filebrowser', storage=storage)
+site = userFileBrowserSite(name='filebrowser', storage=storage)
 
 # Default actions
 from filebrowser.actions import flip_horizontal, flip_vertical, rotate_90_clockwise, rotate_90_counterclockwise, rotate_180

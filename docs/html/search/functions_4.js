@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['extract_5fmetadata',['Extract_MetaData',['../classimgapp_1_1ExtractExif_1_1Extract__Exif.html#a624582cd15b4751b3475c8690fd03e68',1,'imgapp::ExtractExif::Extract_Exif']]]
+  ['extract_5fmetadata',['Extract_MetaData',['../classimgapp_1_1ExtractExif_1_1extractExif.html#a44b9e19a283359e549248d46b9d6bbae',1,'imgapp::ExtractExif::extractExif']]]
 ];

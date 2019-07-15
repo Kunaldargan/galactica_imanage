@@ -1,0 +1,130 @@
+\hypertarget{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite}{}\section{imgapp.\+filebrowser\+\_\+upload.\+user\+File\+Browser\+Site Class Reference}
+\label{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite}\index{imgapp.\+filebrowser\+\_\+upload.\+user\+File\+Browser\+Site@{imgapp.\+filebrowser\+\_\+upload.\+user\+File\+Browser\+Site}}
+
+
+Override filebrowser site functionalities.  
+
+
+
+
+Inheritance diagram for imgapp.\+filebrowser\+\_\+upload.\+user\+File\+Browser\+Site\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for imgapp.\+filebrowser\+\_\+upload.\+user\+File\+Browser\+Site\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_ae8621cf07e7a542bde67af9ab97790f6}{upload} (self, request)
+\begin{DoxyCompactList}\small\item\em override upload method from filebrowser, timestamp set whenever upload template is rendered \end{DoxyCompactList}\item 
+def \hyperlink{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_a847a2908ba1f3d28474de936665d823b}{delete} (self, request)
+\begin{DoxyCompactList}\small\item\em override delete method, delete documents from mongo\+DB while deleting \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_a5cb7a63f6afb189b8060a533118630ef}{timestamp}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_a540a50bf0a1b36907fc23a87a33f7f43}{timestamp} = \char`\"{}\char`\"{}
+\begin{DoxyCompactList}\small\item\em upload timestamp, set when upload page is loaded \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_aeecdb2b8f77f56957df3bb8ab3ae6efd}{\+\_\+upload\+\_\+file} (self, request)
+\begin{DoxyCompactList}\small\item\em override \+\_\+upload\+\_\+file method, updates the mongo\+DB with the meta-\/data of the images uploaded \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Override filebrowser site functionalities. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_aeecdb2b8f77f56957df3bb8ab3ae6efd}\label{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_aeecdb2b8f77f56957df3bb8ab3ae6efd}} 
+\index{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site@{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site}!\+\_\+upload\+\_\+file@{\+\_\+upload\+\_\+file}}
+\index{\+\_\+upload\+\_\+file@{\+\_\+upload\+\_\+file}!imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site@{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site}}
+\subsubsection{\texorpdfstring{\+\_\+upload\+\_\+file()}{\_upload\_file()}}
+{\footnotesize\ttfamily def imgapp.\+filebrowser\+\_\+upload.\+user\+File\+Browser\+Site.\+\_\+upload\+\_\+file (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{request }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+override \+\_\+upload\+\_\+file method, updates the mongo\+DB with the meta-\/data of the images uploaded 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & reference to it\textquotesingle{}s own object \\
+\hline
+{\em request} & http request \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_a847a2908ba1f3d28474de936665d823b}\label{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_a847a2908ba1f3d28474de936665d823b}} 
+\index{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site@{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site}!delete@{delete}}
+\index{delete@{delete}!imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site@{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site}}
+\subsubsection{\texorpdfstring{delete()}{delete()}}
+{\footnotesize\ttfamily def imgapp.\+filebrowser\+\_\+upload.\+user\+File\+Browser\+Site.\+delete (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{request }\end{DoxyParamCaption})}
+
+
+
+override delete method, delete documents from mongo\+DB while deleting 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & reference to it\textquotesingle{}s own object \\
+\hline
+{\em request} & http request \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_ae8621cf07e7a542bde67af9ab97790f6}\label{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_ae8621cf07e7a542bde67af9ab97790f6}} 
+\index{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site@{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site}!upload@{upload}}
+\index{upload@{upload}!imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site@{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site}}
+\subsubsection{\texorpdfstring{upload()}{upload()}}
+{\footnotesize\ttfamily def imgapp.\+filebrowser\+\_\+upload.\+user\+File\+Browser\+Site.\+upload (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{request }\end{DoxyParamCaption})}
+
+
+
+override upload method from filebrowser, timestamp set whenever upload template is rendered 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & reference to it\textquotesingle{}s own object \\
+\hline
+{\em request} & http request \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_a540a50bf0a1b36907fc23a87a33f7f43}\label{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_a540a50bf0a1b36907fc23a87a33f7f43}} 
+\index{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site@{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site}!timestamp@{timestamp}}
+\index{timestamp@{timestamp}!imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site@{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site}}
+\subsubsection{\texorpdfstring{timestamp}{timestamp}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily string imgapp.\+filebrowser\+\_\+upload.\+user\+File\+Browser\+Site.\+timestamp = \char`\"{}\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+upload timestamp, set when upload page is loaded 
+
+\mbox{\Hypertarget{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_a5cb7a63f6afb189b8060a533118630ef}\label{classimgapp_1_1filebrowser__upload_1_1userFileBrowserSite_a5cb7a63f6afb189b8060a533118630ef}} 
+\index{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site@{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site}!timestamp@{timestamp}}
+\index{timestamp@{timestamp}!imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site@{imgapp\+::filebrowser\+\_\+upload\+::user\+File\+Browser\+Site}}
+\subsubsection{\texorpdfstring{timestamp}{timestamp}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily imgapp.\+filebrowser\+\_\+upload.\+user\+File\+Browser\+Site.\+timestamp}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+imgapp/\hyperlink{filebrowser__upload_8py}{filebrowser\+\_\+upload.\+py}\end{DoxyCompactItemize}

@@ -7,12 +7,12 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadReque
 from django.urls import reverse, resolve
 import datetime
 import os
-from .MongoQuery import MongoQuery
+from .MongoQuery import mongoQuery
 import shutil
 import ast
 from .forms import UserForm, ProfileForm, User
 from galactica_imanage.settings import BASE_DIR, DATAPATH
-from .uploadThreadClass import UpdateMongo_Thread, delete_User_Collection
+from .uploadThreadClass import updateMongoThread, delete_User_Collection
 import json
 
 # create media directories
@@ -63,7 +63,7 @@ def Upload(request):
 
     # update mongo database in a separate thread,
     # *add object detection in this thread,
-    update_thread = UpdateMongo_Thread(dataset,imagetype,path_imagetype,timestamp,userID)
+    update_thread = updateMongoThread(dataset,imagetype,path_imagetype,timestamp,userID)
     update_thread.start()
     return HttpResponseRedirect(reverse('updated'))
 
@@ -118,7 +118,7 @@ def QueryObjectResult(request) :
     create_start = format_datetime(request.POST['lower_datetime'])
     create_till = format_datetime(request.POST['upper_datetime'])
 
-    QueryMongo = MongoQuery()
+    QueryMongo = mongoQuery()
     result = os.path.join(STATICPATH,'imgapp')
     if os.path.exists(result) :
         shutil.rmtree(result)

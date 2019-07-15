@@ -9,10 +9,10 @@ import json
 import pprint
 
 
-## Extract_Exif class
+## extractExif class
 #
 # extract meta-data of images in json format
-class Extract_Exif :
+class extractExif :
     ## extensions supported
     img_extensions = ['JPEG','PNG','TIFF','JPG']
 

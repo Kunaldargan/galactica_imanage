@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['extract_5fexif',['Extract_Exif',['../classimgapp_1_1ExtractExif_1_1Extract__Exif.html',1,'imgapp::ExtractExif']]],
-  ['extract_5fmetadata',['Extract_MetaData',['../classimgapp_1_1ExtractExif_1_1Extract__Exif.html#a624582cd15b4751b3475c8690fd03e68',1,'imgapp::ExtractExif::Extract_Exif']]],
-  ['extractexif',['ExtractExif',['../namespaceExtractExif.html',1,'']]],
+  ['extract_5fmetadata',['Extract_MetaData',['../classimgapp_1_1ExtractExif_1_1extractExif.html#a44b9e19a283359e549248d46b9d6bbae',1,'imgapp::ExtractExif::extractExif']]],
+  ['extractexif',['extractExif',['../classimgapp_1_1ExtractExif_1_1extractExif.html',1,'imgapp.ExtractExif.extractExif'],['../namespaceExtractExif.html',1,'ExtractExif']]],
   ['extractexif_2epy',['ExtractExif.py',['../ExtractExif_8py.html',1,'']]]
 ];

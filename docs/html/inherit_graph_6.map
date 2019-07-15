@@ -1,5 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classimgapp_1_1migrations_1_10001__initial_1_1Migration.html" title="imgapp.migrations.0001\l_initial.Migration" alt="" coords="128,5,288,47"/>
-<area shape="rect" id="node3" href="$classimgapp_1_1migrations_1_10002__objects_1_1Migration.html" title="imgapp.migrations.0002\l_objects.Migration" alt="" coords="128,71,288,112"/>
-<area shape="rect" id="node4" href="$classimgapp_1_1migrations_1_10003__description_1_1Migration.html" title="imgapp.migrations.0003\l_description.Migration" alt="" coords="128,136,288,177"/>
+<area shape="rect" id="node2" href="$classimgapp_1_1migrations_1_10001__initial_1_1Migration.html" title="imgapp.migrations.0001\l_initial.Migration" alt="" coords="153,5,313,47"/>
+<area shape="rect" id="node3" href="$classimgapp_1_1migrations_1_10002__objects_1_1Migration.html" title="imgapp.migrations.0002\l_objects.Migration" alt="" coords="153,71,313,112"/>
+<area shape="rect" id="node4" href="$classimgapp_1_1migrations_1_10003__description_1_1Migration.html" title="imgapp.migrations.0003\l_description.Migration" alt="" coords="153,136,313,177"/>
+<area shape="rect" id="node5" href="$classimgapp_1_1migrations_1_10004__auto__20190715__1327_1_1Migration.html" title="imgapp.migrations.0004\l_auto_20190715_1327.Migration" alt="" coords="128,201,337,243"/>
 </map>

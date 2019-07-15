@@ -3,7 +3,7 @@
 # utilities to update documents in MongoDB
 
 from pymongo import MongoClient
-from .ExtractExif import Extract_Exif
+from .ExtractExif import extractExif
 from copy import deepcopy
 import pprint
 from galactica_imanage.settings import MONGO_CONNECTION_URL, MONGO_DATABASE, BASE_DIR, DATAPATH
@@ -24,7 +24,7 @@ Utils_Object = Utils()
 def update_Mongo(ImageType, Path, timestamp, userID, is_file_flag) :
     
     # extract exif data
-    Ext_Exif = Extract_Exif()
+    Ext_Exif = extractExif()
     Exif_All = Ext_Exif.Extract_MetaData(Path, is_file_flag)
 
     # get reference to mongo client
@@ -134,7 +134,7 @@ def delete_User_Collection(userID) :
     return 0
 
 
-## delete documents from mongoDB, used in the delete method of UserFileBrowserSite class
+## delete documents from mongoDB, used in the delete method of userFileBrowserSite class
 # @param is_file_flag True if path to a file is passed 
 # @param path path to the file or folder to be deleted
 # @param userID primary key of the user 

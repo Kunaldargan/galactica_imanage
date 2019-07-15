@@ -9,7 +9,7 @@ from .UpdateMongoDB import update_Mongo, delete_User_Collection
 ## Class to update mongoDB 
 # 
 # thread class 
-class UpdateMongo_Thread (threading.Thread):
+class updateMongoThread (threading.Thread):
 
     ## constructor
     # @param self reference to object itself

@@ -1,4 +1,4 @@
-## @package MongoQuery
+## @package mongoQuery
 # 
 # module to query on mongoDB
 
@@ -32,7 +32,7 @@ def appendID(image, imageids) :
 ## Class to query mongoDB
 #
 # Query on documents in MongoDB
-class MongoQuery :
+class mongoQuery :
     ## Mongo Client
     client = None
     ## Datatbase containing collection of meta-data of images 
@@ -175,5 +175,5 @@ class MongoQuery :
 
 
 if __name__=='__main__' :
-    Query = MongoQuery()
+    Query = mongoQuery()
 

@@ -2,7 +2,7 @@
 #
 # to be run separatly, not with the djnago 
 import json
-from ExtractExif import Extract_Exif
+from ExtractExif import extractExif
 from pprint import pprint
 from pymongo import MongoClient
 
@@ -91,7 +91,7 @@ def uploadCOCO() :
     # print(category_dict)
     imgdict = ListObjects(annotationsList,category)
 
-    Ext_Exif = Extract_Exif()
+    Ext_Exif = extractExif()
     NewExtAll = []
     ExtALL = Ext_Exif.Extract_MetaData('/home/galactica/Downloads/val2017') # CHANGE THE PATH HERE
     
