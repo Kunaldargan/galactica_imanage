@@ -9,9 +9,9 @@ requests==2.22.0
 pycocotools==2.0.0
 Django==2.2.1
 pytest==4.6.2
-tensorflow==1.13.1
+tensorflow-gpu==1.13.1
 Keras
 opencv-python
 webcolors==1.9.1
-yolo34py
+yolo34py-gpu
 django-suit==0.2.26
